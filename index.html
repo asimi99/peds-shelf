@@ -1,0 +1,270 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="strict-origin-when-cross-origin"><style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>Peds Shelf Video Desk</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a study desk. Sticky top bar with name and search, a source rail on the left on wide screens, the working column on the right. Timestamps are the instrument: mono, tinted by source, always jumping to the exact second. */
+:root{
+  --bg:#fbfcfd; --surface:#f1f4f7; --raised:#ffffff; --fg:#14202b; --muted:#5b6876; --line:#dce3ea;
+  --accent:#1d4f8f; --accent-soft:#e6eef8;
+  --hy:#c4231c; --h1:#1d4f8f; --h2:#2f6db5; --e:#b0306c; --d:#a15c00;
+  --h1-soft:#e6eef8; --h2-soft:#e8f1fb; --e-soft:#f9e8f0; --d-soft:#fbefdc;
+  --display:'Manrope','Helvetica Neue',Arial,sans-serif; --body:'Inter','Helvetica Neue',Arial,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f161d; --surface:#16202a; --raised:#1b2733; --fg:#e6ecf2; --muted:#93a1b0; --line:#273543;
+  --accent:#7fb0ec; --accent-soft:#1a2d44; --hy:#ff6b61; --h1:#7fb0ec; --h2:#9cc3f2; --e:#f08bb8; --d:#f2b25c;
+  --h1-soft:#1a2d44; --h2-soft:#1b3047; --e-soft:#3a1f2d; --d-soft:#3a2a12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161d; --surface:#16202a; --raised:#1b2733; --fg:#e6ecf2; --muted:#93a1b0; --line:#273543;
+  --accent:#7fb0ec; --accent-soft:#1a2d44; --hy:#ff6b61; --h1:#7fb0ec; --h2:#9cc3f2; --e:#f08bb8; --d:#f2b25c;
+  --h1-soft:#1a2d44; --h2-soft:#1b3047; --e-soft:#3a1f2d; --d-soft:#3a2a12; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:var(--toph,70px)}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;margin:0;padding-block:0 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.01em;text-wrap:balance;margin:0}
+b.hy{color:var(--hy);font-weight:700}
+u.hy2{text-decoration-thickness:1.5px;text-underline-offset:2px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:8;background:var(--bg);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding-block:12px;max-width:1240px;margin-inline:auto}
+.top h1{font-size:19px;font-weight:800;line-height:1.15;white-space:nowrap}
+.top h1 a{color:var(--fg)}.top h1 a:hover{text-decoration:none}
+.top h1 small{display:block;font-family:var(--body);font-weight:500;font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+.search{flex:1 1 300px;min-width:0;display:flex}
+.search input{flex:1;min-width:0;font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--raised);color:var(--fg)}
+.search input:focus{outline:2px solid var(--accent);outline-offset:-1px}
+
+.wrap{max-width:1240px;margin-inline:auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:32px;padding-top:22px}
+.rail{position:sticky;top:calc(var(--toph,70px) + 18px);align-self:start;display:grid;gap:2px;font-size:14px;max-height:calc(100vh - var(--toph,70px) - 30px);overflow:auto}
+.rail a{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:7px;color:var(--fg)}
+.rail a:hover{background:var(--surface);text-decoration:none}
+.rail a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.rail .k{font-family:var(--mono);font-size:11px;font-weight:600;min-width:24px;text-align:center;padding:1px 0;border-radius:4px}
+.rail .sep{height:1px;background:var(--line);margin:8px 10px}
+.rail .lab{padding:10px 10px 4px}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr);gap:16px;padding-top:12px}.rail{position:static;max-height:none;display:flex;flex-wrap:wrap;gap:6px;overflow:visible}.rail a{border:1px solid var(--line);padding:6px 10px}.rail .sep,.rail .lab{display:none}}
+
+.ts.h1,.k.h1,.chip.h1{color:var(--h1);background:var(--h1-soft)}.ts.h2,.k.h2,.chip.h2{color:var(--h2);background:var(--h2-soft)}.ts.e,.k.e,.chip.e{color:var(--e);background:var(--e-soft)}.ts.d,.k.d,.chip.d{color:var(--d);background:var(--d-soft)}.k.t{color:var(--fg);background:var(--surface)}
+
+main{min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-content:start}
+.hero h2{font-size:30px;font-weight:800}.hero p{max-width:62ch;color:var(--muted);margin:8px 0 0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.tile{display:grid;gap:6px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--raised);color:var(--fg)}
+.tile:hover{border-color:var(--accent);text-decoration:none}
+.tile .tn{font-family:var(--display);font-weight:700;font-size:17px}
+.tile .meta{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+.how{display:grid;gap:6px;font-size:14px;color:var(--muted);max-width:70ch}
+.how b{color:var(--fg);font-weight:600}
+
+.vhead{display:grid;gap:6px}
+.vhead h2{font-size:26px;font-weight:800}
+.vhead .meta{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:14px;align-items:center}
+.player{position:sticky;top:calc(var(--toph,70px) + env(safe-area-inset-top,0px));z-index:6;background:var(--bg);padding-block:8px 10px}
+.player .frame{position:relative;width:min(100%,calc(42vh*16/9));aspect-ratio:16/9;max-width:100%;border-radius:10px;overflow:hidden;background:#000}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.player .poster{position:absolute;inset:0;display:grid;place-items:center;color:#fff;background:#0b1118 center/cover no-repeat;border:0;width:100%;font-weight:600}
+.player .poster span{background:rgba(0,0,0,.6);padding:10px 16px;border-radius:999px}
+.note{font-size:13.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 12px;max-width:72ch}
+
+.secs{display:grid;border-top:1px solid var(--line)}
+.sec{position:relative;display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;padding:13px 8px;margin-inline:-8px;border-bottom:1px solid var(--line);border-radius:6px;cursor:pointer}
+.sec:hover{background:var(--surface)}
+.sec .ts::after{content:"";position:absolute;inset:0}
+.sec .pg a{position:relative;z-index:1}
+.sec.cur{background:linear-gradient(90deg,var(--accent-soft),transparent 70%)}
+.ts{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px;font-weight:600;align-self:start;justify-self:start;padding:3px 8px;border-radius:6px;border:0;white-space:nowrap}
+.ts:hover{text-decoration:none;filter:brightness(.95)}
+.sec h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.sec ul{margin:0;padding-left:18px;display:grid;gap:3px;max-width:76ch}
+.sec .pg{font-size:12.5px;color:var(--muted);margin-top:4px}
+@media (max-width:520px){.sec{grid-template-columns:minmax(0,1fr);gap:6px}}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:12.5px;font-weight:600;padding:4px 9px;border-radius:6px;border:0;white-space:nowrap}
+.chip:hover{text-decoration:none;filter:brightness(.95)}
+.chip.t{white-space:normal;font-family:var(--body);font-weight:500}
+main>section{min-width:0}
+.srcrow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}
+@media (max-width:520px){.srcrow{grid-template-columns:minmax(0,1fr);gap:4px}}
+.chart{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.chart img{display:block;width:100%;height:auto}
+.tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
+.tlist a{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--raised);color:var(--fg);font-size:14px}
+.tlist a:hover{border-color:var(--accent);text-decoration:none}
+.tlist .n{font-family:var(--mono);color:var(--muted);font-size:12.5px;padding-top:1px}
+.pdfv{width:100%;height:calc(100vh - var(--toph,70px) - 120px);min-height:480px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:14px}
+.hits{display:grid;gap:8px}
+.hit{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--raised)}
+.hit .t{font-weight:600}.hit .s{font-size:13.5px;color:var(--muted)}
+mark{background:color-mix(in srgb,var(--d) 30%,transparent);color:inherit;border-radius:2px}
+footer{max-width:1240px;margin:48px auto 0;font-size:12.5px;color:var(--muted);text-align:center}
+@media (prefers-reduced-motion:no-preference){.tile,.tlist a,.chip,.ts{transition:border-color .15s,filter .15s}}
+</style>
+
+<header class="top" id="top">
+  <h1><a href="#home">Peds Shelf Video Desk<small>Dr High Yield · Emma Holliday · Divine Intervention</small></a></h1>
+  <form class="search" id="sform" role="search"><label for="q" class="eyebrow" style="position:absolute;left:-9999px">Search</label><input id="q" type="search" placeholder="Search a topic: Kawasaki, croup, SCFE, TORCH…" autocomplete="off"></form>
+</header>
+<div class="wrap">
+  <nav class="rail" id="rail" aria-label="Sections"></nav>
+  <main id="main"></main>
+</div>
+<footer>Timestamps link to the original YouTube uploads. Flowcharts built from these videos plus the Divine Intervention and Mehlman PDFs.</footer>
+
+<script src="data.js"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s), main=$('#main');
+const VID=Object.fromEntries(VIDS.map(v=>[v.key,v]));
+const LABEL={h1:'H1',h2:'H2',e:'E',d:'D'};
+const EMBED=/github\.io$/.test(location.hostname)||/[?&]embed/.test(location.search);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
+const rich=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b class="hy">$1</b>').replace(/__(.+?)__/g,'<u class="hy2">$1</u>');
+const yt=(id,t)=>`https://www.youtube.com/watch?v=${id}${t?`&t=${Math.floor(t)}s`:''}`;
+const fcPdf='Peds%20Shelf%20Approach%20Flowcharts%20v2.pdf', diPdf='Divine%20Intervention%20Ep21.pdf';
+const PDFS=[
+ {id:'flowcharts',short:'Approach flowcharts',title:'Peds Shelf Approach Flowcharts v2',file:fcPdf,pages:43,desc:'40 Approach to… flowcharts built from all four sources.'},
+ {id:'emma',short:'Emma Holliday slides',title:'Emma Holliday Pediatrics slides',file:'Emma%20Holliday%20Pediatrics.pdf',pages:78,desc:'The question and answer slides she teaches from in the video.'},
+ {id:'mehlman',short:'Mehlman HY Pediatrics',title:'Mehlman Medical HY Pediatrics',file:'Mehlman%20HY%20Pediatrics.pdf',pages:205,desc:'By system (cardio p4, pulm p11, renal p24, GI p33, heme/onc p52, repro p66, derm p90, neuro p103, psych p109, ophtho p121, MSK p127, biochem p141, endo p146) and a bullet summary from p155.'},
+ {id:'divine',short:'Divine Intervention Ep 21',title:'Divine Intervention Episode 21 PDF',file:diPdf,pages:139,desc:'The 43 questions he reads through in the episode.'},
+];
+
+// sticky header height
+const setH=()=>document.documentElement.style.setProperty('--toph',$('#top').offsetHeight+'px');
+addEventListener('resize',setH);setH();
+
+// rail
+$('#rail').innerHTML=`<div class="lab eyebrow">Videos</div>`+VIDS.map(v=>`<a href="#${v.key}" data-r="${v.key}"><span class="k ${v.key}">${LABEL[v.key]}</span>${esc(v.key==='d'?'Divine Intervention':v.title.replace('High Yield Pediatrics, ','Dr High Yield, ').replace(' Pediatrics Review',''))}</a>`).join('')+
+`<div class="sep"></div><div class="lab eyebrow">Topics</div><a href="#topics" data-r="topics"><span class="k t">40</span>Approach flowcharts</a>`+`<div class="sep"></div><div class="lab eyebrow">PDFs</div>`+PDFS.map(d=>`<a href="#pdf-${d.id}" data-r="pdf-${d.id}"><span class="k t">PDF</span>${esc(d.short)}</a>`).join('')+``;
+
+// timestamp element: button that seeks when embedded, link to YouTube otherwise
+function stamp(key,t,cls,label){
+  const v=VID[key];const txt=label||((v.approx?'≈ ':'')+fmt(t));
+  if(EMBED) return `<button type="button" class="${cls} ${key}" data-v="${key}" data-t="${Math.floor(t)}" title="Play from ${fmt(t)}">${esc(txt)}</button>`;
+  return `<a class="${cls} ${key}" href="${yt(v.id,t)}" target="_blank" rel="noopener" title="Open on YouTube at ${fmt(t)}">${esc(txt)}</a>`;
+}
+
+// ---------- player (GitHub Pages copy) ----------
+let curVid=null, ytp=null, ytReady=null;
+function loadAPI(){
+  if(!ytReady) ytReady=new Promise(r=>{window.onYouTubeIframeAPIReady=r;const sc=document.createElement('script');sc.src='https://www.youtube.com/iframe_api';document.head.append(sc)});
+  return ytReady;
+}
+async function startPlayer(t){
+  const key=curVid, v=VID[key];await loadAPI();
+  const fr=$('#player .frame');if(!fr||curVid!==key)return;
+  fr.innerHTML='<div id="ytf"></div>';
+  ytp=new YT.Player('ytf',{videoId:v.id,playerVars:{start:Math.floor(t),autoplay:1,rel:0,playsinline:1,modestbranding:1,hl:'en',cc_lang_pref:'en',cc_load_policy:0,iv_load_policy:3},
+    events:{onReady:e=>{try{e.target.unloadModule('captions');e.target.unloadModule('cc')}catch(_){}e.target.seekTo(Math.floor(t),true);e.target.playVideo()},
+            onApiChange:e=>{try{e.target.unloadModule('captions');e.target.unloadModule('cc')}catch(_){}}}});
+}
+function seek(key,t){
+  if(curVid!==key){location.hash=key+'-t'+t;return}
+  if(ytp&&typeof ytp.seekTo==='function'){ytp.seekTo(t,true);ytp.playVideo()}else{startPlayer(t)}
+  markCur(t);
+  const p=$('#player');if(p&&p.getBoundingClientRect().top<0)p.scrollIntoView({block:'start'});
+}
+function markCur(t){document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('cur',+s.dataset.t<=t&&+s.dataset.e>t))}
+document.addEventListener('click',e=>{
+  const po=e.target.closest('.poster');if(po){e.preventDefault();startPlayer(+(po.dataset.t||0));return}
+  let b=e.target.closest('button[data-v]');
+  if(!b){const sec=e.target.closest('.sec');if(sec&&!e.target.closest('a'))b=sec.querySelector('button[data-v]')}
+  if(b){e.preventDefault();seek(b.dataset.v,+b.dataset.t);return}
+  if(!EMBED){const sec=e.target.closest('.sec');if(sec&&!e.target.closest('a')){const a=sec.querySelector('a.ts');if(a)a.click()}}
+});
+
+// ---------- views ----------
+function home(){
+  main.innerHTML=`<section class="hero"><p class="eyebrow">Pediatrics shelf · ${VIDS.reduce((a,v)=>a+v.sections.length,0)} jump points across 4 videos</p><h2>Watch the reviews by topic, not start to finish.</h2>
+  <p>Every section has its own timestamp and the high-yield points from that part of the video. Red bold is what to know cold. The 40 Approach flowcharts tie the same topic together across all the videos.</p></section>
+  <div class="tiles">${VIDS.map(v=>`<a class="tile" href="#${v.key}"><span class="meta"><span class="k ${v.key} mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${LABEL[v.key]}</span>${esc(v.who)} · ${fmt(v.len)}</span><span class="tn">${esc(v.title)}</span><span class="muted" style="font-size:13.5px">${v.sections.length} sections${v.approx?' · times approximate':''}</span></a>`).join('')}
+  <a class="tile" href="#topics"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">40</span>All sources</span><span class="tn">Approach flowcharts</span><span class="muted" style="font-size:13.5px">Each chart links to the matching moment in every video</span></a>
+  <a class="tile" href="#pdfs"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">PDF</span>4 documents</span><span class="tn">PDFs</span><span class="muted" style="font-size:13.5px">Flowcharts, Emma Holliday slides, Mehlman HY Pediatrics, Divine Intervention Ep 21</span></a></div>
+  <div class="how"><p class="eyebrow">How to use it</p>
+  <div><b>Pick a video</b>, then click any row to ${EMBED?'play from that second in the player, which stays pinned while you scroll':'open YouTube at that second in a new tab'}.</div>
+  <div><b>Pick a topic</b> from the flowcharts to see where each video covers it, with the chart underneath.</div>
+  <div><b>Divine Intervention</b> has no captions or chapters on YouTube, so its times are estimated from the page of his PDF he is reading and may be off by a minute or two. The PDF page is shown on each section.</div></div>`;
+}
+function video(key,t0){
+  const v=VID[key];curVid=key;ytp=null;
+  const secs=v.sections.map((s,i)=>({...s,e:(v.sections[i+1]||{t:v.len+1}).t}));
+  const related=FC.filter(f=>f.chips[key]&&f.chips[key].length);
+  main.innerHTML=`<article class="vhead"><p class="eyebrow">${esc(v.who)}</p><h2>${esc(v.title)}</h2>
+   <div class="meta"><span class="mono">${fmt(v.len)}</span><span>${secs.length} sections</span><a href="${yt(v.id)}" target="_blank" rel="noopener">Open on YouTube</a>${key==='d'?`<a href="${diPdf}" target="_blank" rel="noopener">Episode PDF</a>`:''}</div></article>
+   ${EMBED?`<div class="player" id="player"><div class="frame"><button type="button" class="poster" data-t="${t0||0}" style="background-image:url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)"><span>▶ Play${t0?' from '+fmt(t0):''}</span></button></div></div>`:''}
+   ${v.approx?`<p class="note">No captions or chapters exist for this upload, so these times are estimated from the PDF page he is on. If a jump lands early or late, nudge by a minute.</p>`:''}
+   <div class="secs">${secs.map(s=>`<div class="sec" data-t="${s.t}" data-e="${s.e}">${stamp(key,s.t,'ts')}<div><h3>${esc(s.title)}</h3><ul>${s.notes.map(n=>`<li>${rich(n)}</li>`).join('')}</ul>${s.p?`<div class="pg">PDF page ${s.p} · <a href="${diPdf}#page=${s.p}" target="_blank" rel="noopener">open</a></div>`:''}</div></div>`).join('')}</div>
+   ${related.length?`<section style="display:grid;grid-template-columns:minmax(0,1fr);gap:10px"><p class="eyebrow">Flowcharts that cite this video</p><div class="chips">${related.map(f=>`<a class="chip t k" href="#t${f.n}">${f.n} ${esc(f.name.replace(/^Approach to (the )?/,''))}</a>`).join('')}</div></section>`:''}`;
+  if(EMBED&&t0){startPlayer(t0);markCur(t0)}
+  scrollTo(0,0);
+}
+function topics(){
+  main.innerHTML=`<section class="vhead"><p class="eyebrow">All sources</p><h2>Approach flowcharts</h2><div class="meta">Concepts covered in at least 2 of 4 sources, with every video moment that covers them. <a href="${fcPdf}" target="_blank" rel="noopener">Open the PDF</a></div></section>
+  <div class="tlist">${FC.map(f=>`<a href="#t${f.n}"><span class="n">${f.n}</span><span>${esc(f.name.replace(/^Approach to /,''))}</span></a>`).join('')}</div>`;
+  scrollTo(0,0);
+}
+function topic(n){
+  const i=FC.findIndex(f=>f.n===n);const f=FC[i];if(!f)return topics();
+  const row=(k,name)=>{const c=f.chips[k]||[];if(!c.length)return '';return `<div class="srcrow"><span><span class="k ${k} mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${LABEL[k]}</span> ${name}</span><div class="chips">${c.map(x=>linkTo(k,x[0],(k==='d'?x[1]+' ≈'+fmt(x[0]):x[1]))).join('')}</div></div>`};
+  const prev=FC[i-1],next=FC[i+1];
+  main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="#topics">Approach flowcharts</a> · ${f.n} of 40</p><h2>${esc(f.name)}</h2></section>
+  <section>${row('h1','Dr High Yield, Part 1')}${row('h2','Dr High Yield, Part 2')}${row('e','Emma Holliday')}${row('d','Divine Intervention')}${f.m?`<div class="srcrow"><span class="muted">Mehlman PDF</span><span class="mono" style="font-size:13px">${esc(f.m)}</span></div>`:''}</section>
+  <a class="chart" href="${f.img}" target="_blank" rel="noopener" title="Open full size"><img src="${f.img}" alt="Flowchart: ${esc(f.name)}" loading="lazy"></a>
+  <nav class="pager">${prev?`<a href="#t${prev.n}">← ${prev.n} ${esc(prev.name.replace(/^Approach to /,''))}</a>`:'<span></span>'}${next?`<a href="#t${next.n}">${next.n} ${esc(next.name.replace(/^Approach to /,''))} →</a>`:''}</nav>`;
+  scrollTo(0,0);
+}
+// a chip that goes to the video view at that time (embedded) or straight to YouTube
+function linkTo(k,t,label){
+  if(EMBED) return `<a class="chip ${k}" href="#${k}-t${Math.floor(t)}">${esc(label)}</a>`;
+  return `<a class="chip ${k}" href="${yt(VID[k].id,t)}" target="_blank" rel="noopener">${esc(label)}</a>`;
+}
+function pdfs(){
+  main.innerHTML=`<section class="vhead"><p class="eyebrow">Reading</p><h2>PDFs</h2></section>
+  <div class="tiles">${PDFS.map(d=>`<a class="tile" href="#pdf-${d.id}"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">PDF</span>${d.pages} pages</span><span class="tn">${esc(d.title)}</span><span class="muted" style="font-size:13.5px">${esc(d.desc)}</span></a>`).join('')}</div>`;
+  scrollTo(0,0);
+}
+function pdf(id){
+  const d=PDFS.find(x=>x.id===id);if(!d)return pdfs();
+  main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="#pdfs">PDFs</a> · ${d.pages} pages</p><h2>${esc(d.title)}</h2><div class="meta"><span>${esc(d.desc)}</span><a href="${d.file}" target="_blank" rel="noopener">Open in a new tab</a></div></section>
+  ${EMBED?`<iframe class="pdfv" src="${d.file}#view=FitH" title="${esc(d.title)}"></iframe>`:`<a class="tile" href="${d.file}" target="_blank" rel="noopener" style="max-width:420px"><span class="tn">Open ${esc(d.short)}</span><span class="muted" style="font-size:13.5px">Opens the PDF in a new tab.</span></a>`}`;
+  scrollTo(0,0);
+}
+function search(q){
+  const terms=q.toLowerCase().split(/\s+/).filter(Boolean);if(!terms.length)return route();
+  const hl=s=>{let h=rich(s);terms.forEach(t=>{h=h.replace(new RegExp('('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?![^<]*>)','gi'),'<mark>$1</mark>')});return h};
+  const hits=[];
+  FC.forEach(f=>{const txt=f.name.toLowerCase();if(terms.every(t=>txt.includes(t)))hits.push(`<div class="hit"><a class="chip t k" href="#t${f.n}">Chart ${f.n}</a><div><div class="t">${hl(f.name)}</div></div></div>`)});
+  VIDS.forEach(v=>v.sections.forEach(s=>{const txt=(s.title+' '+s.notes.join(' ')).toLowerCase().replace(/\*|_/g,'');if(terms.every(t=>txt.includes(t))){const n=s.notes.filter(x=>terms.some(t=>x.toLowerCase().includes(t)));hits.push(`<div class="hit">${linkTo(v.key,s.t,LABEL[v.key]+' '+(v.approx?'≈':'')+fmt(s.t))}<div><div class="t">${hl(s.title)}</div><div class="s">${(n.length?n:s.notes).slice(0,2).map(hl).join(' ')}</div></div></div>`)}}));
+  curVid=null;
+  main.innerHTML=`<section class="vhead"><p class="eyebrow">Search</p><h2>${hits.length} result${hits.length===1?'':'s'} for “${esc(q)}”</h2></section><div class="hits">${hits.join('')||'<p class="muted">Nothing matched. Try one word, like "jaundice" or "stridor".</p>'}</div>`;
+}
+function route(){
+  const h=decodeURIComponent(location.hash.slice(1));let r='home';
+  document.querySelectorAll('#rail a[data-r]').forEach(a=>a.classList.remove('on'));
+  let m;
+  if((m=h.match(/^(h1|h2|e|d)(?:-t(\d+))?$/))){r=m[1];video(m[1],m[2]?+m[2]:0)}
+  else if(h==='topics'){r='topics';topics()}
+  else if(h==='pdfs'){r='pdfs';curVid=null;pdfs()}
+  else if((m=h.match(/^pdf-([a-z]+)$/))){r='pdf-'+m[1];curVid=null;pdf(m[1])}
+  else if((m=h.match(/^t(\d\d)$/))){r='topics';curVid=null;topic(m[1])}
+  else {curVid=null;home()}
+  const a=document.querySelector(`#rail a[data-r="${r}"]`);if(a)a.classList.add('on');
+}
+let qt;$('#q').addEventListener('input',e=>{clearTimeout(qt);qt=setTimeout(()=>search(e.target.value.trim()),160)});
+$('#sform').addEventListener('submit',e=>{e.preventDefault();search($('#q').value.trim())});
+addEventListener('hashchange',()=>{$('#q').value='';route()});
+route();
+})();
+</script>
+
+</body></html>
