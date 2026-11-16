@@ -121,6 +121,7 @@ footer{max-width:1240px;margin:48px auto 0;font-size:12.5px;color:var(--muted);t
 <footer>Timestamps link to the original YouTube uploads. Flowcharts built from these videos plus the Divine Intervention and Mehlman PDFs.</footer>
 
 <script src="data.js"></script>
+<script src="sys.js"></script>
 <script>
 (()=>{
 const $=s=>document.querySelector(s), main=$('#main');
@@ -143,8 +144,12 @@ const PDFS=[
 const setH=()=>document.documentElement.style.setProperty('--toph',$('#top').offsetHeight+'px');
 addEventListener('resize',setH);setH();
 
+// systems left to study
+function segsOf(x){return x.segs.map(g=>{const [k,t]=g.split('@');const v=VID[k];const i=v.sections.findIndex(q=>q.t==+t);const sec=v.sections[i];return {k,t:+t,e:(v.sections[i+1]||{t:v.len}).t,s:sec}}).sort((a,b)=>'h1h2ed'.indexOf(a.k)-'h1h2ed'.indexOf(b.k)||a.t-b.t)}
+const mins=a=>Math.round(a.reduce((n,x)=>n+x.e-x.t,0)/60);
 // rail
 $('#rail').innerHTML=`<div class="lab eyebrow">Videos</div>`+VIDS.map(v=>`<a href="#${v.key}" data-r="${v.key}"><span class="k ${v.key}">${LABEL[v.key]}</span>${esc(v.key==='d'?'Divine Intervention':v.title.replace('High Yield Pediatrics, ','Dr High Yield, ').replace(' Pediatrics Review',''))}</a>`).join('')+
+`<div class="sep"></div><div class="lab eyebrow">Left to study</div><a href="#left" data-r="left"><span class="k t">${SYS.length}</span>All systems left</a>`+SYS.map(x=>`<a href="#sys-${x.id}" data-r="sys-${x.id}"><span class="k t">${segsOf(x).length}</span>${esc(x.short)}</a>`).join('')+
 `<div class="sep"></div><div class="lab eyebrow">Topics</div><a href="#topics" data-r="topics"><span class="k t">40</span>Approach flowcharts</a>`+`<div class="sep"></div><div class="lab eyebrow">PDFs</div>`+PDFS.map(d=>`<a href="#pdf-${d.id}" data-r="pdf-${d.id}"><span class="k t">PDF</span>${esc(d.short)}</a>`).join('')+``;
 
 // timestamp element: button that seeks when embedded, link to YouTube otherwise
@@ -176,7 +181,7 @@ function seek(key,t){
 }
 function markCur(t){document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('cur',+s.dataset.t<=t&&+s.dataset.e>t))}
 document.addEventListener('click',e=>{
-  const po=e.target.closest('.poster');if(po){e.preventDefault();startPlayer(+(po.dataset.t||0));return}
+  const po=e.target.closest('.poster:not(.sposter)');if(po){e.preventDefault();startPlayer(+(po.dataset.t||0));return}
   let b=e.target.closest('button[data-v]');
   if(!b){const sec=e.target.closest('.sec');if(sec&&!e.target.closest('a'))b=sec.querySelector('button[data-v]')}
   if(b){e.preventDefault();seek(b.dataset.v,+b.dataset.t);return}
@@ -189,6 +194,7 @@ function home(){
   <p>Every section has its own timestamp and the high-yield points from that part of the video. Red bold is what to know cold. The 40 Approach flowcharts tie the same topic together across all the videos.</p></section>
   <div class="tiles">${VIDS.map(v=>`<a class="tile" href="#${v.key}"><span class="meta"><span class="k ${v.key} mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${LABEL[v.key]}</span>${esc(v.who)} · ${fmt(v.len)}</span><span class="tn">${esc(v.title)}</span><span class="muted" style="font-size:13.5px">${v.sections.length} sections${v.approx?' · times approximate':''}</span></a>`).join('')}
   <a class="tile" href="#topics"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">40</span>All sources</span><span class="tn">Approach flowcharts</span><span class="muted" style="font-size:13.5px">Each chart links to the matching moment in every video</span></a>
+  <a class="tile" href="#left"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${SYS.length}</span>From your study schedule</span><span class="tn">Systems left to study</span><span class="muted" style="font-size:13.5px">GI, cardio, renal and the rest, each as one playlist</span></a>
   <a class="tile" href="#pdfs"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">PDF</span>4 documents</span><span class="tn">PDFs</span><span class="muted" style="font-size:13.5px">Flowcharts, Emma Holliday slides, Mehlman HY Pediatrics, Divine Intervention Ep 21</span></a></div>
   <div class="how"><p class="eyebrow">How to use it</p>
   <div><b>Pick a video</b>, then click any row to ${EMBED?'play from that second in the player, which stays pinned while you scroll':'open YouTube at that second in a new tab'}.</div>
@@ -208,6 +214,42 @@ function video(key,t0){
   if(EMBED&&t0){startPlayer(t0);markCur(t0)}
   scrollTo(0,0);
 }
+
+function left(){
+  curVid=null;
+  main.innerHTML=`<section class="vhead"><p class="eyebrow">Peds study schedule</p><h2>Systems left to study</h2><div class="meta">Every video moment for each system you have not done yet, in schedule order. ${EMBED?'Play all runs one system start to finish, jumping between videos.':''}</div></section>
+  <div class="tiles">${SYS.map(x=>{const a=segsOf(x);return `<a class="tile" href="#sys-${x.id}"><span class="meta"><span class="mono">${a.length} clips · ${mins(a)} min</span></span><span class="tn">${esc(x.name)}</span><span class="muted" style="font-size:13.5px">${esc(x.when)}</span></a>`}).join('')}</div>`;
+  scrollTo(0,0);
+}
+let sysList=[],sysIdx=-1,playAll=false,sp=null;
+function sysView(id){
+  const x=SYS.find(q=>q.id===id);if(!x)return left();
+  curVid=null;sysList=segsOf(x);sysIdx=-1;playAll=false;sp=null;
+  const i=SYS.indexOf(x),prev=SYS[i-1],next=SYS[i+1];
+  main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="#left">Systems left to study</a> · ${esc(x.when)}</p><h2>${esc(x.name)}</h2>
+   <div class="meta"><span class="mono">${sysList.length} clips · ${mins(sysList)} min</span>${EMBED?`<button type="button" class="chip t k" id="pall">▶ Play all in order</button>`:''}</div></section>
+   ${EMBED?`<div class="player" id="player"><div class="frame"><button type="button" class="poster sposter" id="sposter" style="background-image:url(https://i.ytimg.com/vi/${VID[sysList[0].k].id}/hqdefault.jpg)"><span>▶ Play all in order</span></button></div><div class="muted" id="nowp" style="font-size:13px;margin-top:6px"></div></div>`:''}
+   <div class="secs">${sysList.map((c,j)=>`<div class="sec sclip" data-j="${j}">${EMBED?`<button type="button" class="ts ${c.k}" data-j="${j}">${LABEL[c.k]} ${VID[c.k].approx?'≈ ':''}${fmt(c.t)}</button>`:`<a class="ts ${c.k}" href="${yt(VID[c.k].id,c.t)}" target="_blank" rel="noopener">${LABEL[c.k]} ${VID[c.k].approx?'≈ ':''}${fmt(c.t)}</a>`}<div><h3>${esc(c.s.title)} <span class="muted mono" style="font-size:12px;font-weight:500">${Math.max(1,Math.round((c.e-c.t)/60))} min</span></h3><ul>${c.s.notes.map(n=>`<li>${rich(n)}</li>`).join('')}</ul></div></div>`).join('')}</div>
+   <nav class="pager">${prev?`<a href="#sys-${prev.id}">← ${esc(prev.name)}</a>`:'<span></span>'}${next?`<a href="#sys-${next.id}">${esc(next.name)} →</a>`:''}</nav>`;
+  const go=()=>{playAll=true;playClip(sysIdx<0?0:sysIdx)};const pa=$('#pall');if(pa)pa.onclick=go;const po=$('#sposter');if(po)po.onclick=go;
+  scrollTo(0,0);
+}
+async function playClip(j){
+  const c=sysList[j];if(!c)return;sysIdx=j;
+  document.querySelectorAll('.sclip').forEach(r=>r.classList.toggle('cur',+r.dataset.j===j));
+  const np=$('#nowp');if(np)np.textContent=`${j+1} of ${sysList.length} · ${VID[c.k].who} · ${c.s.title}${playAll?' · playing all':''}`;
+  const opts={videoId:VID[c.k].id,startSeconds:c.t,endSeconds:c.e};
+  if(sp&&typeof sp.loadVideoById==='function'){sp.loadVideoById(opts);return}
+  await loadAPI();const fr=$('#player .frame');if(!fr)return;fr.innerHTML='<div id="ytf"></div>';
+  sp=new YT.Player('ytf',{videoId:opts.videoId,playerVars:{start:c.t,end:c.e,autoplay:1,rel:0,playsinline:1,hl:'en',cc_lang_pref:'en',cc_load_policy:0,iv_load_policy:3},
+    events:{onReady:e=>{try{e.target.unloadModule('captions')}catch(_){}e.target.playVideo()},
+            onStateChange:e=>{if(e.data===0&&playAll&&sysIdx<sysList.length-1)playClip(sysIdx+1)}}});
+  const p=$('#player');if(p&&p.getBoundingClientRect().top<0)p.scrollIntoView({block:'start'});
+}
+document.addEventListener('click',e=>{
+  if(!EMBED)return;const b=e.target.closest('.sclip');if(!b||e.target.closest('a'))return;
+  e.preventDefault();e.stopPropagation();playClip(+b.dataset.j);
+},true);
 function topics(){
   main.innerHTML=`<section class="vhead"><p class="eyebrow">All sources</p><h2>Approach flowcharts</h2><div class="meta">Concepts covered in at least 2 of 4 sources, with every video moment that covers them. <a href="${fcPdf}" target="_blank" rel="noopener">Open the PDF</a></div></section>
   <div class="tlist">${FC.map(f=>`<a href="#t${f.n}"><span class="n">${f.n}</span><span>${esc(f.name.replace(/^Approach to /,''))}</span></a>`).join('')}</div>`;
@@ -254,6 +296,8 @@ function route(){
   let m;
   if((m=h.match(/^(h1|h2|e|d)(?:-t(\d+))?$/))){r=m[1];video(m[1],m[2]?+m[2]:0)}
   else if(h==='topics'){r='topics';topics()}
+  else if(h==='left'){r='left';left()}
+  else if((m=h.match(/^sys-([a-z]+)$/))){r='sys-'+m[1];sysView(m[1])}
   else if(h==='pdfs'){r='pdfs';curVid=null;pdfs()}
   else if((m=h.match(/^pdf-([a-z]+)$/))){r='pdf-'+m[1];curVid=null;pdf(m[1])}
   else if((m=h.match(/^t(\d\d)$/))){r='topics';curVid=null;topic(m[1])}
