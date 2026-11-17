@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="strict-origin-when-cross-origin"><style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
-<script src="https://asimi99.github.io/clerkship-tools/nav.js?v=4" data-noauth data-static></script>
+<script src="https://asimi99.github.io/clerkship-tools/nav.js?v=5" data-noauth data-static></script>
 <title>Peds Shelf Video Desk</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,6 +81,7 @@ main{min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align
 @media (max-width:520px){.sec{grid-template-columns:minmax(0,1fr);gap:6px}}
 
 .chips{display:flex;flex-wrap:wrap;gap:6px}
+.srcbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 4px}.srcb{font:600 13.5px var(--body);border:1.5px solid var(--line);background:var(--raised);color:var(--muted);border-radius:99px;padding:6px 12px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}.srcb b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;font-size:11px;color:#fff}.srcb.h1 b{background:var(--h1)}.srcb.h2 b{background:var(--h2)}.srcb.e b{background:var(--e)}.srcb.d b{background:var(--d)}.srcb.on.h1{color:var(--h1);border-color:var(--h1);background:var(--h1-soft)}.srcb.on.h2{color:var(--h2);border-color:var(--h2);background:var(--h2-soft)}.srcb.on.e{color:var(--e);border-color:var(--e);background:var(--e-soft)}.srcb.on.d{color:var(--d);border-color:var(--d);background:var(--d-soft)}
 .chip{font-family:var(--mono);font-size:12.5px;font-weight:600;padding:4px 9px;border-radius:6px;border:0;white-space:nowrap}
 .chip:hover{text-decoration:none;filter:brightness(.95)}
 .chip.t{white-space:normal;font-family:var(--body);font-weight:500}
@@ -118,7 +119,7 @@ footer{max-width:1240px;margin:48px auto 0;font-size:12.5px;color:var(--muted);t
 <script>
 (()=>{
 const $=s=>document.querySelector(s), main=$('#main');
-const VID=Object.fromEntries(VIDS.map(v=>[v.key,v]));
+const VID=Object.fromEntries(VIDS.map(v=>[v.key,v]));if(VID.d)VID.d.noembed=true;
 const LABEL={h1:'H1',h2:'H2',e:'E',d:'D'};
 const EMBED=/github\.io$/.test(location.hostname)||/[?&]embed/.test(location.search);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -138,7 +139,11 @@ const setH=()=>document.documentElement.style.setProperty('--toph',$('#top').off
 addEventListener('resize',setH);setH();
 
 // systems left to study
-function segsOf(x){return x.segs.map(g=>{const [k,t]=g.split('@');const v=VID[k];const i=v.sections.findIndex(q=>q.t==+t);const sec=v.sections[i];return {k,t:+t,e:(v.sections[i+1]||{t:v.len}).t,s:sec}}).sort((a,b)=>'h1h2ed'.indexOf(a.k)-'h1h2ed'.indexOf(b.k)||a.t-b.t)}
+let ORDER=(()=>{try{const o=JSON.parse(localStorage.getItem('ps_src')||'null');if(Array.isArray(o)&&o.length)return o}catch(_){}return ['e','h1','h2','d']})();
+function saveOrder(){try{localStorage.setItem('ps_src',JSON.stringify(ORDER))}catch(_){}}
+function segsOf(x){return x.segs.map(g=>{const [k,t]=g.split('@');const v=VID[k];const i=v.sections.findIndex(q=>q.t==+t);const sec=v.sections[i];return {k,t:+t,e:(v.sections[i+1]||{t:v.len}).t,s:sec}}).filter(c=>ORDER.includes(c.k)).sort((a,b)=>ORDER.indexOf(a.k)-ORDER.indexOf(b.k)||a.t-b.t)}
+function srcBar(id){const all=['e','h1','h2','d'];return `<div class="srcbar"><span class="muted" style="font-size:13px">Lecturers, in the order you tap them:</span>${all.map(k=>{const i=ORDER.indexOf(k);return `<button type="button" class="srcb ${k}${i>=0?' on':''}" data-src="${k}" data-sys="${id}">${i>=0?`<b>${i+1}</b>`:''}${esc(VID[k].who==='Dr High Yield'?(k==='h1'?'Dr High Yield 1':'Dr High Yield 2'):VID[k].who)}</button>`}).join('')}</div>`}
+document.addEventListener('click',e=>{const b=e.target.closest('.srcb');if(!b)return;e.preventDefault();e.stopPropagation();const k=b.dataset.src;const i=ORDER.indexOf(k);if(i>=0){if(ORDER.length>1)ORDER.splice(i,1)}else ORDER.push(k);saveOrder();const id=b.dataset.sys;if(id)sysView(id);else left()},true);
 const mins=a=>Math.round(a.reduce((n,x)=>n+x.e-x.t,0)/60);
 // rail
 $('#rail').innerHTML=`<div class="lab eyebrow">Videos</div>`+VIDS.map(v=>`<a href="#${v.key}" data-r="${v.key}"><span class="k ${v.key}">${LABEL[v.key]}</span>${esc(v.key==='d'?'Divine Intervention':v.title.replace('High Yield Pediatrics, ','Dr High Yield, ').replace(' Pediatrics Review',''))}</a>`).join('')+
@@ -148,7 +153,7 @@ $('#rail').innerHTML=`<div class="lab eyebrow">Videos</div>`+VIDS.map(v=>`<a hre
 // timestamp element: button that seeks when embedded, link to YouTube otherwise
 function stamp(key,t,cls,label){
   const v=VID[key];const txt=label||((v.approx?'≈ ':'')+fmt(t));
-  if(EMBED) return `<button type="button" class="${cls} ${key}" data-v="${key}" data-t="${Math.floor(t)}" title="Play from ${fmt(t)}">${esc(txt)}</button>`;
+  if(EMBED&&!v.noembed) return `<button type="button" class="${cls} ${key}" data-v="${key}" data-t="${Math.floor(t)}" title="Play from ${fmt(t)}">${esc(txt)}</button>`;
   return `<a class="${cls} ${key}" href="${yt(v.id,t)}" title="Open on YouTube at ${fmt(t)}">${esc(txt)}</a>`;
 }
 
@@ -200,7 +205,7 @@ function video(key,t0){
   const related=FC.filter(f=>f.chips[key]&&f.chips[key].length);
   main.innerHTML=`<article class="vhead"><p class="eyebrow">${esc(v.who)}</p><h2>${esc(v.title)}</h2>
    <div class="meta"><span class="mono">${fmt(v.len)}</span><span>${secs.length} sections</span><a href="${yt(v.id)}">Open on YouTube</a>${key==='d'?`<a href="${diPdf}">Episode PDF</a>`:''}</div></article>
-   ${EMBED?`<div class="player" id="player"><div class="frame"><button type="button" class="poster" data-t="${t0||0}" style="background-image:url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)"><span>▶ Play${t0?' from '+fmt(t0):''}</span></button></div></div>`:''}
+   ${EMBED&&!v.noembed?`<div class="player" id="player"><div class="frame"><button type="button" class="poster" data-t="${t0||0}" style="background-image:url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)"><span>▶ Play${t0?' from '+fmt(t0):''}</span></button></div></div>`:''}
    ${v.approx?`<p class="note">No captions or chapters exist for this upload, so these times are estimated from the PDF page he is on. If a jump lands early or late, nudge by a minute.</p>`:''}
    <div class="secs">${secs.map(s=>`<div class="sec" data-t="${s.t}" data-e="${s.e}">${stamp(key,s.t,'ts')}<div><h3>${esc(s.title)}</h3><ul>${s.notes.map(n=>`<li>${rich(n)}</li>`).join('')}</ul>${s.p?`<div class="pg">PDF page ${s.p} · <a href="${diPdf}#page=${s.p}">open</a></div>`:''}</div></div>`).join('')}</div>
    ${related.length?`<section style="display:grid;grid-template-columns:minmax(0,1fr);gap:10px"><p class="eyebrow">Flowcharts that cite this video</p><div class="chips">${related.map(f=>`<a class="chip t k" href="#t${f.n}">${f.n} ${esc(f.name.replace(/^Approach to (the )?/,''))}</a>`).join('')}</div></section>`:''}`;
@@ -210,7 +215,7 @@ function video(key,t0){
 
 function left(){
   curVid=null;
-  main.innerHTML=`<section class="vhead"><p class="eyebrow">Peds shelf</p><h2>All systems</h2><div class="meta">Every video moment for each organ system, collected into one playlist per system. ${EMBED?'Play all runs one system start to finish, jumping between videos.':''}</div></section>
+  main.innerHTML=`<section class="vhead"><p class="eyebrow">Peds shelf</p><h2>All systems</h2>${srcBar('')}<div class="meta">Every video moment for each organ system, collected into one playlist per system. ${EMBED?'Play all runs one system start to finish, jumping between videos.':''}</div></section>
   <div class="tiles">${SYS.map(x=>{const a=segsOf(x);return `<a class="tile" href="#sys-${x.id}"><span class="meta"><span class="mono">${a.length} clips · ${mins(a)} min</span></span><span class="tn">${esc(x.name)}</span></a>`}).join('')}</div>`;
   scrollTo(0,0);
 }
@@ -219,16 +224,16 @@ function sysView(id){
   const x=SYS.find(q=>q.id===id);if(!x)return left();
   curVid=null;sysList=segsOf(x);sysIdx=-1;playAll=false;sp=null;
   const i=SYS.indexOf(x),prev=SYS[i-1],next=SYS[i+1];
-  main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="#left">All systems</a></p><h2>${esc(x.name)}</h2>
-   <div class="meta"><span class="mono">${sysList.length} clips · ${mins(sysList)} min</span>${EMBED?`<button type="button" class="chip t k" id="pall">▶ Play all in order</button>`:''}</div></section>
-   ${EMBED?`<div class="player" id="player"><div class="frame"><button type="button" class="poster sposter" id="sposter" style="background-image:url(https://i.ytimg.com/vi/${VID[sysList[0].k].id}/hqdefault.jpg)"><span>▶ Play all in order</span></button></div><div class="muted" id="nowp" style="font-size:13px;margin-top:6px"></div></div>`:''}
+  main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="#left">All systems</a></p><h2>${esc(x.name)}</h2>${srcBar(x.id)}
+   <div class="meta"><span class="mono">${sysList.length} clips · ${mins(sysList)} min</span>${EMBED&&sysList.length?`<button type="button" class="chip t k" id="pall">▶ Play all in order</button>`:''}</div></section>
+   ${EMBED&&sysList.length&&!VID[sysList[0].k].noembed?`<div class="player" id="player"><div class="frame"><button type="button" class="poster sposter" id="sposter" style="background-image:url(https://i.ytimg.com/vi/${VID[sysList[0].k].id}/hqdefault.jpg)"><span>▶ Play all in order</span></button></div><div class="muted" id="nowp" style="font-size:13px;margin-top:6px"></div></div>`:''}
    <div class="secs">${sysList.map((c,j)=>`<div class="sec sclip" data-j="${j}">${EMBED?`<button type="button" class="ts ${c.k}" data-j="${j}">${LABEL[c.k]} ${VID[c.k].approx?'≈ ':''}${fmt(c.t)}</button>`:`<a class="ts ${c.k}" href="${yt(VID[c.k].id,c.t)}">${LABEL[c.k]} ${VID[c.k].approx?'≈ ':''}${fmt(c.t)}</a>`}<div><h3>${esc(c.s.title)} <span class="muted mono" style="font-size:12px;font-weight:500">${Math.max(1,Math.round((c.e-c.t)/60))} min</span></h3><ul>${c.s.notes.map(n=>`<li>${rich(n)}</li>`).join('')}</ul></div></div>`).join('')}</div>
    <nav class="pager">${prev?`<a href="#sys-${prev.id}">← ${esc(prev.name)}</a>`:'<span></span>'}${next?`<a href="#sys-${next.id}">${esc(next.name)} →</a>`:''}</nav>`;
-  const go=()=>{playAll=true;playClip(sysIdx<0?0:sysIdx)};const pa=$('#pall');if(pa)pa.onclick=go;const po=$('#sposter');if(po)po.onclick=go;
+  const go=()=>{playAll=true;let n=sysIdx<0?0:sysIdx;while(n<sysList.length&&VID[sysList[n].k].noembed)n++;playClip(n)};const pa=$('#pall');if(pa)pa.onclick=go;const po=$('#sposter');if(po)po.onclick=go;
   scrollTo(0,0);
 }
 async function playClip(j){
-  const c=sysList[j];if(!c)return;sysIdx=j;
+  const c=sysList[j];if(!c)return;if(VID[c.k].noembed){location.href=yt(VID[c.k].id,c.t);return}sysIdx=j;
   document.querySelectorAll('.sclip').forEach(r=>r.classList.toggle('cur',+r.dataset.j===j));
   const np=$('#nowp');if(np)np.textContent=`${j+1} of ${sysList.length} · ${VID[c.k].who} · ${c.s.title}${playAll?' · playing all':''}`;
   const opts={videoId:VID[c.k].id,startSeconds:c.t,endSeconds:c.e};
@@ -236,7 +241,7 @@ async function playClip(j){
   await loadAPI();const fr=$('#player .frame');if(!fr)return;fr.innerHTML='<div id="ytf"></div>';
   sp=new YT.Player('ytf',{videoId:opts.videoId,playerVars:{start:c.t,end:c.e,autoplay:1,rel:0,playsinline:1,hl:'en',cc_lang_pref:'en',cc_load_policy:0,iv_load_policy:3},
     events:{onReady:e=>{try{e.target.unloadModule('captions')}catch(_){}e.target.playVideo()},
-            onStateChange:e=>{if(e.data===0&&playAll&&sysIdx<sysList.length-1)playClip(sysIdx+1)}}});
+            onStateChange:e=>{if(e.data===0&&playAll){let n=sysIdx+1;while(n<sysList.length&&VID[sysList[n].k].noembed)n++;if(n<sysList.length)playClip(n)}}}});
   const p=$('#player');if(p&&p.getBoundingClientRect().top<0)p.scrollIntoView({block:'start'});
 }
 document.addEventListener('click',e=>{
