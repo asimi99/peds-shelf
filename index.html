@@ -105,7 +105,7 @@ footer{max-width:1240px;margin:48px auto 0;font-size:12.5px;color:var(--muted);t
 </style>
 
 <header class="top" id="top">
-  <h1><a href="#home">Peds Shelf Video Desk<small>Dr High Yield · Emma Holliday · Divine Intervention</small></a></h1>
+  <h1><a href="#home">Peds Shelf Video Desk<small>Dr High Yield · Emma Holliday · Divine Intervention · Peds Board Review</small></a></h1>
   <form class="search" id="sform" role="search"><label for="q" class="eyebrow" style="position:absolute;left:-9999px">Search</label><input id="q" type="search" placeholder="Search a topic: Kawasaki, croup, SCFE, TORCH…" autocomplete="off"></form>
 </header>
 <div class="wrap">
@@ -116,6 +116,7 @@ footer{max-width:1240px;margin:48px auto 0;font-size:12.5px;color:var(--muted);t
 
 <script src="data.js"></script>
 <script src="sys.js"></script>
+<script src="pbr.js"></script>
 <script>
 (()=>{
 const $=s=>document.querySelector(s), main=$('#main');
@@ -148,7 +149,7 @@ const mins=a=>Math.round(a.reduce((n,x)=>n+x.e-x.t,0)/60);
 // rail
 $('#rail').innerHTML=`<div class="lab eyebrow">Videos</div>`+VIDS.map(v=>`<a href="#${v.key}" data-r="${v.key}"><span class="k ${v.key}">${LABEL[v.key]}</span>${esc(v.key==='d'?'Divine Intervention':v.title.replace('High Yield Pediatrics, ','Dr High Yield, ').replace(' Pediatrics Review',''))}</a>`).join('')+
 `<div class="sep"></div><div class="lab eyebrow">By system</div><a href="#left" data-r="left"><span class="k t">${SYS.length}</span>All systems</a>`+SYS.map(x=>`<a href="#sys-${x.id}" data-r="sys-${x.id}"><span class="k t">${segsOf(x).length}</span>${esc(x.short)}</a>`).join('')+
-`<div class="sep"></div><div class="lab eyebrow">Topics</div><a href="#topics" data-r="topics"><span class="k t">40</span>Approach flowcharts</a>`+`<div class="sep"></div><div class="lab eyebrow">PDFs</div>`+PDFS.map(d=>`<a href="#pdf-${d.id}" data-r="pdf-${d.id}"><span class="k t">PDF</span>${esc(d.short)}</a>`).join('')+``;
+`<div class="sep"></div><div class="lab eyebrow">Full lectures</div><a href="#pbr" data-r="pbr"><span class="k t">${PBR.reduce((a,g)=>a+g.v.length,0)}</span>Board Review by subject</a>`+`<div class="sep"></div><div class="lab eyebrow">Topics</div><a href="#topics" data-r="topics"><span class="k t">40</span>Approach flowcharts</a>`+`<div class="sep"></div><div class="lab eyebrow">PDFs</div>`+PDFS.map(d=>`<a href="#pdf-${d.id}" data-r="pdf-${d.id}"><span class="k t">PDF</span>${esc(d.short)}</a>`).join('')+``;
 
 // timestamp element: button that seeks when embedded, link to YouTube otherwise
 function stamp(key,t,cls,label){
@@ -191,6 +192,7 @@ function home(){
   main.innerHTML=`<section class="hero"><p class="eyebrow">Pediatrics shelf · ${VIDS.reduce((a,v)=>a+v.sections.length,0)} jump points across 4 videos</p><h2>Watch the reviews by topic, not start to finish.</h2>
   <p>Every section has its own timestamp and the high-yield points from that part of the video. Red bold is what to know cold. The 40 Approach flowcharts tie the same topic together across all the videos.</p></section>
   <div class="tiles">${VIDS.map(v=>`<a class="tile" href="#${v.key}"><span class="meta"><span class="k ${v.key} mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${LABEL[v.key]}</span>${esc(v.who)} · ${fmt(v.len)}</span><span class="tn">${esc(v.title)}</span><span class="muted" style="font-size:13.5px">${v.sections.length} sections${v.approx?' · times approximate':''}</span></a>`).join('')}
+  <a class="tile" href="#pbr"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${PBR.reduce((a,g)=>a+g.v.length,0)}</span>Pediatric Board A Last-Minute Review</span><span class="tn">Full lectures by subject</span><span class="muted" style="font-size:13.5px">1 to 3 full lectures for each system</span></a>
   <a class="tile" href="#topics"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">40</span>All sources</span><span class="tn">Approach flowcharts</span><span class="muted" style="font-size:13.5px">Each chart links to the matching moment in every video</span></a>
   <a class="tile" href="#left"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${SYS.length}</span>By system</span><span class="tn">All systems</span><span class="muted" style="font-size:13.5px">GI, cardio, renal and the rest, each as one playlist</span></a>
   <a class="tile" href="#pdfs"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">PDF</span>4 documents</span><span class="tn">PDFs</span><span class="muted" style="font-size:13.5px">Flowcharts, Emma Holliday slides, Mehlman HY Pediatrics, Divine Intervention Ep 21</span></a></div>
@@ -220,6 +222,10 @@ function left(){
   scrollTo(0,0);
 }
 let sysList=[],sysIdx=-1,playAll=false,sp=null;
+const pbrCard=v=>`<a class="tile pbr" href="https://www.youtube.com/watch?v=${v.id}"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" loading="lazy" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px"><span class="meta"><span class="mono">${fmt(v.len)}</span></span><span class="tn">${esc(v.title)}</span></a>`;
+function pbrBlock(id){const g=PBR.find(q=>q.sys===id);if(!g)return '';return `<section style="margin-top:28px"><p class="eyebrow">Full lectures · <a href="${PBR_CH.url}">${esc(PBR_CH.name)}</a></p><div class="tiles">${g.v.map(pbrCard).join('')}</div></section>`}
+function pbrView(){main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="${PBR_CH.url}">${esc(PBR_CH.name)}</a></p><h2>Full lectures by subject</h2></section>`+PBR.map(g=>`<section style="margin-top:22px"><h3>${SYS.find(q=>q.id===g.sys)?`<a href="#sys-${g.sys}">${esc(g.name)}</a>`:esc(g.name)}</h3><div class="tiles">${g.v.map(pbrCard).join('')}</div></section>`).join('');scrollTo(0,0)}
+
 function sysView(id){
   const x=SYS.find(q=>q.id===id);if(!x)return left();
   curVid=null;sysList=segsOf(x);sysIdx=-1;playAll=false;sp=null;
@@ -228,6 +234,7 @@ function sysView(id){
    <div class="meta"><span class="mono">${sysList.length} clips · ${mins(sysList)} min</span>${EMBED&&sysList.length?`<button type="button" class="chip t k" id="pall">▶ Play all in order</button>`:''}</div></section>
    ${EMBED&&sysList.length&&!VID[sysList[0].k].noembed?`<div class="player" id="player"><div class="frame"><button type="button" class="poster sposter" id="sposter" style="background-image:url(https://i.ytimg.com/vi/${VID[sysList[0].k].id}/hqdefault.jpg)"><span>▶ Play all in order</span></button></div><div class="muted" id="nowp" style="font-size:13px;margin-top:6px"></div></div>`:''}
    <div class="secs">${sysList.map((c,j)=>`<div class="sec sclip" data-j="${j}">${EMBED?`<button type="button" class="ts ${c.k}" data-j="${j}">${LABEL[c.k]} ${VID[c.k].approx?'≈ ':''}${fmt(c.t)}</button>`:`<a class="ts ${c.k}" href="${yt(VID[c.k].id,c.t)}">${LABEL[c.k]} ${VID[c.k].approx?'≈ ':''}${fmt(c.t)}</a>`}<div><h3>${esc(c.s.title)} <span class="muted mono" style="font-size:12px;font-weight:500">${Math.max(1,Math.round((c.e-c.t)/60))} min</span></h3><ul>${c.s.notes.map(n=>`<li>${rich(n)}</li>`).join('')}</ul></div></div>`).join('')}</div>
+   ${pbrBlock(x.id)}
    <nav class="pager">${prev?`<a href="#sys-${prev.id}">← ${esc(prev.name)}</a>`:'<span></span>'}${next?`<a href="#sys-${next.id}">${esc(next.name)} →</a>`:''}</nav>`;
   const go=()=>{playAll=true;let n=sysIdx<0?0:sysIdx;while(n<sysList.length&&VID[sysList[n].k].noembed)n++;playClip(n)};const pa=$('#pall');if(pa)pa.onclick=go;const po=$('#sposter');if(po)po.onclick=go;
   scrollTo(0,0);
@@ -294,6 +301,7 @@ function route(){
   let m;
   if((m=h.match(/^(h1|h2|e|d)(?:-t(\d+))?$/))){r=m[1];video(m[1],m[2]?+m[2]:0)}
   else if(h==='topics'){r='topics';topics()}
+  else if(h==='pbr'){r='pbr';curVid=null;pbrView()}
   else if(h==='left'){r='left';left()}
   else if((m=h.match(/^sys-([a-z]+)$/))){r='sys-'+m[1];sysView(m[1])}
   else if(h==='pdfs'){r='pdfs';curVid=null;pdfs()}
