@@ -1,8 +1,19 @@
 // Comparative cheat sheets by subject. Each sheet: root question -> category boxes -> condition cards.
 // Card = [condition, what it is / key feature, how the kid looks on UWorld]. **x** = red bold buzz phrase.
 window.CS=[
-{id:'cardio',name:'Cardiology',sheets:[
-{id:'chd',t:'Congenital heart defects',q:'Blue baby or pink baby? Then: shunt or blockage?',g:[
+{id:'cardio',al:'cardiology cardiac heart cardio cardiovascular cvs',name:'Cardiology',sheets:[
+{id:'chd',t:'Congenital heart defects',q:'Blue baby or pink baby? Then: shunt or blockage?',cmp:{h:['Cyanotic (right to left)','Acyanotic: shunt (left to right)','Acyanotic: obstruction'],t:['b','a','c'],r:[
+ ['Colour','**Blue at rest**, worse with crying or feeding','Pink','Pink. **Grey and mottled** if a duct-dependent lesion is closing'],
+ ['When it shows','**First hours to days** (as the PDA closes)','**4 to 8 weeks** (as pulmonary resistance falls and the shunt grows)','Newborn shock when the PDA closes, or an older kid with high BP, a murmur or exertional syncope'],
+ ['100% O2 (hyperoxia test)','**PaO2 stays under 150**. O2 barely helps','Sats normal. O2 is not the treatment','Sats normal. Coarctation can show **higher right arm than leg sats** before repair'],
+ ['Core problem','Not enough oxygenated blood reaches the body (mixing or too little lung flow)','**Too much blood to the lungs**, volume load, heart failure','Pressure load on one ventricle, low flow past the block'],
+ ['How the kid looks','Cyanosis, **tet spells**, later clubbing and polycythemia','**Sweating with feeds, poor weight gain, tachypnea, hepatomegaly**, recurrent chest infections','**Weak or delayed femoral pulses, arm BP higher than legs**, ejection murmur, click, syncope with exercise'],
+ ['Chest X-ray','**Less lung blood**: tetralogy (boot), tricuspid atresia, Ebstein (huge heart). **More lung blood**: TGA (egg on a string), truncus, TAPVR (snowman)','**Increased pulmonary markings**, big heart','Lungs usually normal. **Rib notching** and figure 3 in older coarctation'],
+ ['What helps','**PGE1 keeps the PDA open**. Tet spell: **knees to chest or squatting** (raises SVR), O2, morphine, fluids, phenylephrine','Diuretics, extra calories, **indomethacin to close a PDA**, surgery for heart failure or pulmonary hypertension','**PGE1 in a newborn** with coarctation or critical AS, then balloon or surgical repair'],
+ ['What does not help or hurts','**100% O2 does not fix it**. Crying, dehydration and agitation trigger tet spells','Waiting too long: **Eisenmenger** (shunt reverses, late cyanosis, now inoperable)','**Indomethacin or letting the PDA close** in a duct-dependent lesion causes shock'],
+ ['Late risks','Polycythemia, **stroke, brain abscess** (clots skip the lung filter)','Eisenmenger, **paradoxical embolus** (ASD), endocarditis (VSD)','Hypertension, LVH, aortic dissection or aneurysm, early coronary disease'],
+ ['Members','The 5 Ts plus Ebstein and HLHS: **Truncus, TGA, Tricuspid atresia, Tetralogy, TAPVR**','**VSD, ASD, PDA, AV canal**','**Coarctation, aortic stenosis, pulmonic stenosis**']]},
+ g:[
  {h:'Cyanotic (right to left)',c:'b',r:'Blue in the first days. **100% O2 does not fix it** (PaO2 stays low = heart, not lung). Most need **PGE1 to keep the PDA open**.',x:[
   ['Transposition of the great arteries','Aorta off the RV, pulmonary artery off the LV. Parallel circuits. **Single loud S2, often no murmur**','Day 1 to 2, deep cyanosis, no distress, **infant of a diabetic mother**. CXR: **egg on a string**. Next: PGE1, then balloon septostomy, then **arterial switch**'],
   ['Tetralogy of Fallot','VSD, **pulmonic stenosis**, overriding aorta, RVH. Cyanosis tracks with how tight the RV outflow is','Toddler who **squats after playing**, or turns blue and limp when crying (**tet spell**). Harsh systolic murmur at left upper sternal border. CXR: **boot-shaped heart**. Spell: knees to chest, O2, morphine, fluids, phenylephrine'],
@@ -80,7 +91,7 @@ window.CS=[
   ['Congenital rubella','**PDA**, peripheral pulmonic stenosis','Cataracts, deafness, blueberry muffin rash'],
   ['Fetal alcohol','VSD','Smooth philtrum, thin upper lip, small head']]}]}
 ]},
-{id:'pulm',name:'Pulmonary',sheets:[
+{id:'pulm',al:'pulmonary respiratory lung lungs pulm breathing',name:'Pulmonary',sheets:[
 {id:'stridor',t:'Upper airway: stridor',q:'Stridor = upper airway. Wheeze = lower. How sick, how fast, how old?',g:[
  {h:'Acute and febrile',c:'b',r:'Toxic kid: **do not lie them down, do not examine the throat**.',x:[
   ['Croup','**Parainfluenza**, subglottic swelling','6 months to 3 years, **barking seal cough**, worse at night, low fever. X-ray **steeple sign**. **Dexamethasone** for all, **racemic epinephrine** if stridor at rest'],
@@ -136,7 +147,7 @@ window.CS=[
   ['Bugs','S aureus early, **Pseudomonas** later','Clubbing, bronchiectasis'],
   ['Diagnosis','**Sweat chloride** over 60','Newborn screen immunoreactive trypsinogen first']]}]}
 ]},
-{id:'gi',name:'Gastrointestinal',sheets:[
+{id:'gi',al:'gastrointestinal gi gut bowel abdomen nutrition',name:'Gastrointestinal',sheets:[
 {id:'vomit',t:'The vomiting infant',q:'Green or not green?',g:[
  {h:'Bilious (green) = obstruction below the ampulla',c:'b',r:'Surgical until proven otherwise.',x:[
   ['Malrotation with volvulus','Ladd bands, twist around SMA','**Sudden bilious vomiting in a well baby**, often first month. **Upper GI series**: corkscrew. Unstable or peritonitis: **straight to OR**'],
@@ -202,7 +213,7 @@ window.CS=[
   ['Omphalocele','**Midline, covered by a sac**','**Associated anomalies**: trisomy 13 and 18, **Beckwith-Wiedemann** (big tongue, hypoglycemia). Karyotype and echo'],
   ['Umbilical hernia','Reducible, covered by skin','Common, closes by itself. Surgery only if still there at **4 to 5 years** or incarcerated. Think **hypothyroidism** if big tongue too']]}]}
 ]},
-{id:'renal',name:'Renal and urinary',sheets:[
+{id:'renal',al:'renal kidney urinary nephrology genitourinary gu',name:'Renal and urinary',sheets:[
 {id:'glom',t:'Nephritic vs nephrotic',q:'Blood and high BP, or protein and swelling?',g:[
  {h:'Nephritic (hematuria, HTN, low urine)',c:'b',r:'Cola urine, puffy eyes, high BP.',x:[
   ['Post-streptococcal GN','Immune complexes, **low C3**','**1 to 3 weeks after strep throat** (3 to 6 after skin). Cola urine, edema, HTN. Supportive, diuretic. Penicillin **does not prevent** it'],
@@ -256,7 +267,7 @@ window.CS=[
   ['Hypospadias','Opening on underside','**Do not circumcise** (foreskin used for repair)'],
   ['Varicocele','Left side','**Bag of worms**, worse standing']]}]}
 ]},
-{id:'endo',name:'Endocrine',sheets:[
+{id:'endo',al:'endocrine endo hormones metabolism',name:'Endocrine',sheets:[
 {id:'short',t:'Short stature',q:'Compare bone age to real age. Is height velocity normal?',g:[
  {h:'Normal variants (normal velocity)',c:'d',r:'',x:[
   ['Constitutional delay','Late bloomer','**Bone age less than real age**, parent was a late bloomer, late puberty, reaches normal adult height. Reassure'],
@@ -292,7 +303,7 @@ window.CS=[
   ['Hypocalcemia','DiGeorge, infant of a diabetic mother, transfusion','Tetany, seizures. IV calcium gluconate'],
   ['Rickets','Vitamin D deficiency','Exclusively breastfed, dark skin, no vitamin D. **Bowed legs, rachitic rosary, wide wrists**. Low phosphate, high ALP']]}]}
 ]},
-{id:'neuro',name:'Neurology',sheets:[
+{id:'neuro',al:'neurology neuro brain nervous',name:'Neurology',sheets:[
 {id:'seizure',t:'Seizures and spells',q:'Fever? Age? What happened after?',g:[
  {h:'With fever',c:'b',r:'',x:[
   ['Simple febrile seizure','6 months to 5 years','Generalized, **under 15 minutes, once in 24 hours**, back to normal. **No workup**, reassure. Antipyretics do not prevent'],
@@ -334,7 +345,7 @@ window.CS=[
   ['Tuberous sclerosis','TSC1 and 2','**Ash leaf spots**, shagreen patch, infantile spasms, **cardiac rhabdomyoma**, renal angiomyolipoma'],
   ['Sturge-Weber','Not inherited','**Port wine stain on the face (V1)**, seizures, glaucoma']]}]}
 ]},
-{id:'heme',name:'Hematology and oncology',sheets:[
+{id:'heme',al:'hematology oncology heme onc blood cancer',name:'Hematology and oncology',sheets:[
 {id:'anemia',t:'Anemia in a child',q:'Look at the MCV and the retic count.',g:[
  {h:'Microcytic',c:'b',r:'',x:[
   ['Iron deficiency','Most common','Toddler drinking **lots of cow milk**, pale, pica. **High RDW**, low ferritin. Iron trial'],
@@ -386,7 +397,7 @@ window.CS=[
   ['Retinoblastoma','RB1','**Lost red reflex (leukocoria)**, strabismus. Later osteosarcoma'],
   ['Brain tumours','Mostly infratentorial','Medulloblastoma, astrocytoma: **ataxia, morning vomiting**. Craniopharyngioma: **bitemporal hemianopia**, calcified, short']]}]}
 ]},
-{id:'id',name:'Infectious disease',sheets:[
+{id:'id',al:'infectious disease id infection',name:'Infectious disease',sheets:[
 {id:'fever',t:'Fever in a young infant and meningitis',q:'How old?',g:[
  {h:'Under 28 days',c:'b',r:'Any fever 38 = **full workup: blood, urine, LP**, admit.',x:[
   ['Neonatal sepsis','**GBS, E coli, Listeria**','**Ampicillin plus gentamicin** (or cefotaxime). HSV: add **acyclovir** if seizures, vesicles, high LFTs']]},
@@ -441,7 +452,7 @@ window.CS=[
   ['Transient synovitis','After a cold','**Walks with a limp**, low fever, joint WBC low. NSAIDs'],
   ['Osteomyelitis','S aureus','Sickle cell: **Salmonella**. **Nail through sneaker: Pseudomonas**. Neonate: GBS. MRI']]}]}
 ]},
-{id:'immuno',name:'Immunology and allergy',sheets:[
+{id:'immuno',al:'immunology allergy immuno',name:'Immunology and allergy',sheets:[
 {id:'immdef',t:'Immunodeficiencies',q:'What kind of bug, and when did it start?',g:[
  {h:'B cell (after 6 months)',c:'a',r:'Recurrent **sinopulmonary** infections with encapsulated bacteria. Starts **after 6 months** when maternal IgG fades.',x:[
   ['Bruton agammaglobulinemia','X-linked, BTK','**Boy, no tonsils or nodes**, no B cells. **IVIG**. No live vaccines'],
@@ -468,7 +479,7 @@ window.CS=[
   ['Allergic proctocolitis','Cow milk','Well baby, **blood streaks**'],
   ['Eosinophilic esophagitis','','Food stuck, dysphagia, rings on scope']]}]}
 ]},
-{id:'msk',name:'Musculoskeletal and rheumatology',sheets:[
+{id:'msk',al:'musculoskeletal msk rheumatology rheum ortho orthopedics bone',name:'Musculoskeletal and rheumatology',sheets:[
 {id:'limp',t:'The limping child',q:'Age plus pain plus fever.',g:[
  {h:'By age',c:'a',r:'Most common cause at any age: **trauma**.',x:[
   ['Developmental dysplasia of the hip','Newborn','**Girl, firstborn, breech**. Barlow and Ortolani, uneven thigh folds. **Ultrasound under 4 to 6 months**, X-ray later. **Pavlik harness**'],
@@ -497,7 +508,7 @@ window.CS=[
  {h:'Abuse red flags',c:'b',r:'',x:[
   ['Abuse','Pattern does not match story','**Posterior rib, metaphyseal corner, spiral in non-walker**, retinal hemorrhages, burns with clean lines. **Skeletal survey**, admit to keep safe, report']]}]}
 ]},
-{id:'derm',name:'Dermatology',sheets:[
+{id:'derm',al:'dermatology derm skin rash',name:'Dermatology',sheets:[
 {id:'newbornskin',t:'Newborn skin: reassure or act',q:'',g:[
  {h:'Reassure',c:'d',r:'',x:[
   ['Erythema toxicum','Day 2 to 3','Red blotches with pustules, **eosinophils**'],
@@ -526,7 +537,7 @@ window.CS=[
   ['Molluscum','Poxvirus','Pearly umbilicated papules. Leave alone'],
   ['Acne','','Topical retinoid or benzoyl peroxide, add antibiotic, **isotretinoin needs pregnancy test and 2 forms of contraception**']]}]}
 ]},
-{id:'eye',name:'Ophthalmology',sheets:[
+{id:'eye',al:'ophthalmology eye eyes ophtho vision',name:'Ophthalmology',sheets:[
 {id:'eyes',t:'Eye findings',q:'',g:[
  {h:'Neonatal conjunctivitis by day',c:'a',r:'',x:[
   ['Chemical','Day 1','From prophylaxis drops'],
@@ -542,7 +553,7 @@ window.CS=[
   ['Nasolacrimal duct obstruction','','Tearing, crust, white eye. Massage, opens by 1 year'],
   ['Viral conjunctivitis','Adenovirus','Back to school when discharge stops']]}]}
 ]},
-{id:'newborn',name:'Newborn',sheets:[
+{id:'newborn',al:'newborn neonatal neonate neonatology',name:'Newborn',sheets:[
 {id:'delivery',t:'Delivery room and scalp',q:'',g:[
  {h:'Resuscitation',c:'b',r:'',x:[
   ['Apgar','Colour, HR, reflex, tone, breathing','**Does not predict outcome and does not guide resuscitation**. Acrocyanosis loses 1 point'],
@@ -564,7 +575,7 @@ window.CS=[
   ['Breastfeeding contraindications','','**HIV (in Canada), galactosemia, active untreated TB, chemo, illicit drugs**. Hep B and C are not'],
   ['Supplements','','Breastfed: **vitamin D 400 IU** daily. **No honey under 1** (botulism). No cow milk under 9 to 12 months']]}]}
 ]},
-{id:'genetics',name:'Genetics and metabolism',sheets:[
+{id:'genetics',al:'genetics genetic metabolism syndromes',name:'Genetics and metabolism',sheets:[
 {id:'syndromes',t:'Dysmorphic child',q:'',g:[
  {h:'Trisomies and sex chromosomes',c:'a',r:'',x:[
   ['Down (21)','','Flat face, single crease, **AV canal, duodenal atresia, Hirschsprung, hypothyroid, ALL, atlantoaxial instability**, early Alzheimer'],
@@ -599,7 +610,7 @@ window.CS=[
   ['Homocystinuria','','Tall, **lens down and in**, clots, delay'],
   ['PKU','','Musty odour, fair skin']]}]}
 ]},
-{id:'dev',name:'Development and general peds',sheets:[
+{id:'dev',al:'development developmental general peds milestones toxicology poisoning',name:'Development and general peds',sheets:[
 {id:'milestones',t:'Milestones and red flags',q:'',g:[
  {h:'Motor',c:'a',r:'',x:[
   ['2 months','Head up prone','Social smile'],

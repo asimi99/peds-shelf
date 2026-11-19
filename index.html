@@ -105,6 +105,7 @@ main>section{min-width:0}
 .fc-card .uw{font-size:13.5px;line-height:1.45;background:var(--surface);border-radius:6px;padding:6px 8px}
 .fc-card .uw span{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--tc);margin-right:6px}
 .t-a{--tc:#1d4f8f;--ts:#e6eef8}.t-b{--tc:#b3261e;--ts:#fbe9e7}.t-c{--tc:#9a5b00;--ts:#fbefdc}.t-d{--tc:#2e7d32;--ts:#e7f4e8}.t-e{--tc:#6a3ea1;--ts:#f1eafa}
+.cmpw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--raised);margin-bottom:22px}.cmp{border-collapse:collapse;width:100%;min-width:720px;font-size:13.5px;line-height:1.45}.cmp th,.cmp td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}.cmp thead th{font-family:var(--display);font-size:14.5px;color:var(--tc);background:var(--ts);border-bottom:2px solid var(--tc)}.cmp tbody th{font-family:var(--display);font-size:13px;width:140px;background:var(--surface)}.cmp tr:last-child td,.cmp tr:last-child th{border-bottom:0}
 .fc-keys{display:grid;gap:0;border-top:1px solid var(--line);margin-top:18px}
 .fc-keys div{display:grid;grid-template-columns:180px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}
 .fc-keys b{font-family:var(--display)}
@@ -298,7 +299,7 @@ function csSheet(id,sid){const x=CS.find(q=>q.id===id);if(!x)return csIndex();co
   const card=c=>`<div class="fc-card"><div class="nm">${rich(c[0])}</div>${c[1]?`<div class="ex">${rich(c[1])}</div>`:''}${c[2]?`<div class="uw"><span>UWorld</span>${rich(c[2])}</div>`:''}</div>`;
   const col=g=>`<div class="fc-col t-${g.c||'a'}">${g.h||g.r?`<div class="fc-cat">${g.h?`<h3>${esc(g.h)}</h3>`:''}${g.r?`<p>${rich(g.r)}</p>`:''}</div>`:''}${g.x.map(card).join('')}</div>`;
   main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="#cs">Cheat sheets</a> · <a href="#cs-${x.id}">${esc(x.name)}</a></p><h2>${esc(h.t)}</h2></section>
-  <div class="fc">${h.q?`<div class="fc-root">${rich(h.q)}</div>`:''}<div class="fc-br${h.q&&h.g.length>1?'':' one'}">${h.g.map(col).join('')}</div>
+  <div class="fc">${h.q?`<div class="fc-root">${rich(h.q)}</div>`:''}${h.cmp?`<div class="cmpw"><table class="cmp"><thead><tr><th></th>${h.cmp.h.map((c,i)=>`<th class="t-${h.cmp.t[i]}">${esc(c)}</th>`).join('')}</tr></thead><tbody>${h.cmp.r.map(r=>`<tr><th>${esc(r[0])}</th>${r.slice(1).map(c=>`<td>${rich(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:''}<div class="fc-br${h.q&&h.g.length>1?'':' one'}">${h.g.map(col).join('')}</div>
   ${h.k&&h.k.length?`<div class="fc-keys">${h.k.map(k=>`<div><b>${esc(k[0])}</b><span>${rich(k[1])}</span></div>`).join('')}</div>`:''}</div>
   <nav class="pager">${prev?`<a href="#cs-${x.id}-${prev.id}">← ${esc(prev.t)}</a>`:'<span></span>'}${next?`<a href="#cs-${x.id}-${next.id}">${esc(next.t)} →</a>`:''}</nav>`;scrollTo(0,0)}
 function topics(){
@@ -336,11 +337,15 @@ function search(q){
   const terms=q.toLowerCase().split(/\s+/).filter(Boolean);if(!terms.length)return route();
   const hl=s=>{let h=rich(s);terms.forEach(t=>{h=h.replace(new RegExp('('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?![^<]*>)','gi'),'<mark>$1</mark>')});return h};
   const hits=[];
-  CS.forEach(x=>x.sheets.forEach(h=>h.g.forEach(g=>g.x.forEach(c=>{const txt=c.join(' ').toLowerCase().replace(/\*|_/g,'');if(terms.every(t=>txt.includes(t)))hits.push(`<div class="hit"><a class="chip t k" href="#cs-${x.id}-${h.id}">${esc(x.name)}</a><div><div class="t">${hl(c[0])}</div><div class="s">${hl(c[2]||c[1])}</div></div></div>`)}))));
+  const shHits=[];
+  CS.forEach(x=>x.sheets.forEach(sh=>{const base=(x.name+' '+(x.al||'')+' '+sh.t+' '+(sh.q||'')).toLowerCase();
+    const all=(base+' '+sh.g.map(g=>g.h+' '+g.x.map(c=>c.join(' ')).join(' ')).join(' ')+' '+(sh.cmp?sh.cmp.r.flat().join(' '):'')).toLowerCase().replace(/\*|_/g,'');
+    if(terms.every(t=>all.includes(t)))shHits.push(csTile(x,sh));
+    sh.g.forEach(g=>g.x.forEach(c=>{const txt=(base+' '+g.h+' '+c.join(' ')).toLowerCase().replace(/\*|_/g,'');if(terms.every(t=>txt.includes(t)))hits.push(`<div class="hit"><a class="chip t k" href="#cs-${x.id}-${sh.id}">${esc(sh.t)}</a><div><div class="t">${hl(c[0])}</div><div class="s">${hl(c[2]||c[1])}</div></div></div>`)}))}));
   if(0)FC.forEach(f=>{const txt=f.name.toLowerCase();if(terms.every(t=>txt.includes(t)))hits.push(`<div class="hit"><a class="chip t k" href="#t${f.n}">Chart ${f.n}</a><div><div class="t">${hl(f.name)}</div></div></div>`)});
   VIDS.concat(window.NAGA||[]).forEach(v=>v.sections.forEach(s=>{const txt=(s.title+' '+s.notes.join(' ')).toLowerCase().replace(/\*|_/g,'');if(terms.every(t=>txt.includes(t))){const n=s.notes.filter(x=>terms.some(t=>x.toLowerCase().includes(t)));hits.push(`<div class="hit">${linkTo(v.key,s.t,LABEL[v.key]+' '+(v.approx?'≈':'')+fmt(s.t))}<div><div class="t">${hl(s.title)}</div><div class="s">${(n.length?n:s.notes).slice(0,2).map(hl).join(' ')}</div></div></div>`)}}));
   curVid=null;
-  main.innerHTML=`<section class="vhead"><p class="eyebrow">Search</p><h2>${hits.length} result${hits.length===1?'':'s'} for “${esc(q)}”</h2></section><div class="hits">${hits.join('')||'<p class="muted">Nothing matched. Try one word, like "jaundice" or "stridor".</p>'}</div>`;
+  main.innerHTML=`<section class="vhead"><p class="eyebrow">Search</p><h2>${hits.length+shHits.length} result${hits.length+shHits.length===1?'':'s'} for “${esc(q)}”</h2></section>${shHits.length?`<section style="display:grid;gap:10px"><p class="eyebrow">Cheat sheets</p><div class="tiles">${shHits.join('')}</div></section>`:''}<div class="hits">${hits.join('')||'<p class="muted">Nothing matched. Try one word, like "jaundice" or "stridor".</p>'}</div>`;
 }
 function route(){
   const h=decodeURIComponent(location.hash.slice(1));let r='home';
