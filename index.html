@@ -117,11 +117,12 @@ footer{max-width:1240px;margin:48px auto 0;font-size:12.5px;color:var(--muted);t
 <script src="data.js"></script>
 <script src="sys.js"></script>
 <script src="pbr.js"></script>
+<script src="naga.js"></script>
 <script>
 (()=>{
 const $=s=>document.querySelector(s), main=$('#main');
-const VID=Object.fromEntries(VIDS.map(v=>[v.key,v]));if(VID.d)VID.d.noembed=true;
-const LABEL={h1:'H1',h2:'H2',e:'E',d:'D'};
+const VID=Object.fromEntries(VIDS.concat(window.NAGA||[]).map(v=>[v.key,v]));if(VID.d)VID.d.noembed=true;
+const LABEL={h1:'H1',h2:'H2',e:'E',d:'D'};(window.NAGA||[]).forEach(v=>LABEL[v.key]='N');
 const EMBED=/github\.io$/.test(location.hostname)||/[?&]embed/.test(location.search);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
@@ -208,7 +209,7 @@ function video(key,t0){
   main.innerHTML=`<article class="vhead"><p class="eyebrow">${esc(v.who)}</p><h2>${esc(v.title)}</h2>
    <div class="meta"><span class="mono">${fmt(v.len)}</span><span>${secs.length} sections</span><a href="${yt(v.id)}">Open on YouTube</a>${key==='d'?`<a href="${diPdf}">Episode PDF</a>`:''}</div></article>
    ${EMBED&&!v.noembed?`<div class="player" id="player"><div class="frame"><button type="button" class="poster" data-t="${t0||0}" style="background-image:url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)"><span>▶ Play${t0?' from '+fmt(t0):''}</span></button></div></div>`:''}
-   ${v.approx?`<p class="note">No captions or chapters exist for this upload, so these times are estimated from the PDF page he is on. If a jump lands early or late, nudge by a minute.</p>`:''}
+   ${v.approx&&v.key.startsWith('n_')?`<p class="note">The captions on this upload are garbled, so these times are approximate. If a jump lands early or late, nudge by a minute.</p>`:''}${v.approx&&!v.key.startsWith('n_')?`<p class="note">No captions or chapters exist for this upload, so these times are estimated from the PDF page he is on. If a jump lands early or late, nudge by a minute.</p>`:''}
    <div class="secs">${secs.map(s=>`<div class="sec" data-t="${s.t}" data-e="${s.e}">${stamp(key,s.t,'ts')}<div><h3>${esc(s.title)}</h3><ul>${s.notes.map(n=>`<li>${rich(n)}</li>`).join('')}</ul>${s.p?`<div class="pg">PDF page ${s.p} · <a href="${diPdf}#page=${s.p}">open</a></div>`:''}</div></div>`).join('')}</div>
    ${related.length?`<section style="display:grid;grid-template-columns:minmax(0,1fr);gap:10px"><p class="eyebrow">Flowcharts that cite this video</p><div class="chips">${related.map(f=>`<a class="chip t k" href="#t${f.n}">${f.n} ${esc(f.name.replace(/^Approach to (the )?/,''))}</a>`).join('')}</div></section>`:''}`;
   if(EMBED&&t0){startPlayer(t0);markCur(t0)}
@@ -222,7 +223,7 @@ function left(){
   scrollTo(0,0);
 }
 let sysList=[],sysIdx=-1,playAll=false,sp=null;
-const pbrCard=v=>`<a class="tile pbr" href="https://www.youtube.com/watch?v=${v.id}"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" loading="lazy" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px"><span class="meta"><span class="mono">${fmt(v.len)}</span></span><span class="tn">${esc(v.title)}</span></a>`;
+const pbrCard=v=>`<a class="tile pbr" href="${VID['n_'+v.id]?'#n_'+v.id:'https://www.youtube.com/watch?v='+v.id}"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" loading="lazy" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px"><span class="meta"><span class="mono">${fmt(v.len)}${VID['n_'+v.id]?' · '+VID['n_'+v.id].sections.length+' sections':''}</span></span><span class="tn">${esc(v.title)}</span></a>`;
 function pbrBlock(id){const g=PBR.find(q=>q.sys===id);if(!g)return '';return `<section style="margin-top:28px"><p class="eyebrow">Full lectures · <a href="${PBR_CH.url}">${esc(PBR_CH.name)}</a></p><div class="tiles">${g.v.map(pbrCard).join('')}</div></section>`}
 function pbrView(){main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="${PBR_CH.url}">${esc(PBR_CH.name)}</a></p><h2>Full lectures by subject</h2></section>`+PBR.map(g=>`<section style="margin-top:22px"><h3>${SYS.find(q=>q.id===g.sys)?`<a href="#sys-${g.sys}">${esc(g.name)}</a>`:esc(g.name)}</h3><div class="tiles">${g.v.map(pbrCard).join('')}</div></section>`).join('');scrollTo(0,0)}
 
@@ -291,7 +292,7 @@ function search(q){
   const hl=s=>{let h=rich(s);terms.forEach(t=>{h=h.replace(new RegExp('('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?![^<]*>)','gi'),'<mark>$1</mark>')});return h};
   const hits=[];
   FC.forEach(f=>{const txt=f.name.toLowerCase();if(terms.every(t=>txt.includes(t)))hits.push(`<div class="hit"><a class="chip t k" href="#t${f.n}">Chart ${f.n}</a><div><div class="t">${hl(f.name)}</div></div></div>`)});
-  VIDS.forEach(v=>v.sections.forEach(s=>{const txt=(s.title+' '+s.notes.join(' ')).toLowerCase().replace(/\*|_/g,'');if(terms.every(t=>txt.includes(t))){const n=s.notes.filter(x=>terms.some(t=>x.toLowerCase().includes(t)));hits.push(`<div class="hit">${linkTo(v.key,s.t,LABEL[v.key]+' '+(v.approx?'≈':'')+fmt(s.t))}<div><div class="t">${hl(s.title)}</div><div class="s">${(n.length?n:s.notes).slice(0,2).map(hl).join(' ')}</div></div></div>`)}}));
+  VIDS.concat(window.NAGA||[]).forEach(v=>v.sections.forEach(s=>{const txt=(s.title+' '+s.notes.join(' ')).toLowerCase().replace(/\*|_/g,'');if(terms.every(t=>txt.includes(t))){const n=s.notes.filter(x=>terms.some(t=>x.toLowerCase().includes(t)));hits.push(`<div class="hit">${linkTo(v.key,s.t,LABEL[v.key]+' '+(v.approx?'≈':'')+fmt(s.t))}<div><div class="t">${hl(s.title)}</div><div class="s">${(n.length?n:s.notes).slice(0,2).map(hl).join(' ')}</div></div></div>`)}}));
   curVid=null;
   main.innerHTML=`<section class="vhead"><p class="eyebrow">Search</p><h2>${hits.length} result${hits.length===1?'':'s'} for “${esc(q)}”</h2></section><div class="hits">${hits.join('')||'<p class="muted">Nothing matched. Try one word, like "jaundice" or "stridor".</p>'}</div>`;
 }
@@ -299,7 +300,7 @@ function route(){
   const h=decodeURIComponent(location.hash.slice(1));let r='home';
   document.querySelectorAll('#rail a[data-r]').forEach(a=>a.classList.remove('on'));
   let m;
-  if((m=h.match(/^(h1|h2|e|d)(?:-t(\d+))?$/))){r=m[1];video(m[1],m[2]?+m[2]:0)}
+  if((m=h.match(/^(h1|h2|e|d|n_[\w-]{11})(?:-t(\d+))?$/))&&VID[m[1]]){r=m[1].startsWith('n_')?'pbr':m[1];video(m[1],m[2]?+m[2]:0)}
   else if(h==='topics'){r='topics';topics()}
   else if(h==='pbr'){r='pbr';curVid=null;pbrView()}
   else if(h==='left'){r='left';left()}
