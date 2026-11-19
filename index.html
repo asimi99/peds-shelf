@@ -28,9 +28,9 @@ u.hy2{text-decoration-thickness:1.5px;text-underline-offset:2px}
 .eyebrow{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
 
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:8;background:var(--bg);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding-block:12px;max-width:1240px;margin-inline:auto}
-.top h1{font-size:19px;font-weight:800;line-height:1.15;white-space:nowrap}
+.top h1{font-size:19px;font-weight:800;line-height:1.15;min-width:0}
 .top h1 a{color:var(--fg)}.top h1 a:hover{text-decoration:none}
-.top h1 small{display:block;font-family:var(--body);font-weight:500;font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+.top h1 small{display:block;white-space:normal;font-family:var(--body);font-weight:500;font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
 .search{flex:1 1 300px;min-width:0;display:flex}
 .search input{flex:1;min-width:0;font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--raised);color:var(--fg)}
 .search input:focus{outline:2px solid var(--accent);outline-offset:-1px}
@@ -88,6 +88,28 @@ main{min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align
 main>section{min-width:0}
 .srcrow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}
 @media (max-width:520px){.srcrow{grid-template-columns:minmax(0,1fr);gap:4px}}
+
+.fc{display:grid;gap:0;min-width:0}
+.fc-root{justify-self:center;max-width:640px;text-align:center;font-family:var(--display);font-weight:700;font-size:16px;padding:10px 16px;border:2px solid var(--fg);border-radius:10px;background:var(--raised);position:relative;margin-bottom:22px}
+.fc-root::after{content:"";position:absolute;left:50%;top:100%;height:22px;border-left:2px solid var(--line)}
+.fc-br{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;align-items:start;border-top:2px solid var(--line);padding-top:14px}
+.fc-br.one{border-top:0;padding-top:0}
+.fc-col{display:grid;gap:8px;min-width:0}
+.fc-cat{border-radius:10px;padding:10px 12px;border:1.5px solid var(--tc);background:var(--ts)}
+.fc-cat h3{font-size:15.5px;color:var(--tc)}
+.fc-cat p{margin:4px 0 0;font-size:13.5px;line-height:1.45}
+.fc-card{position:relative;border:1px solid var(--line);border-left:4px solid var(--tc);border-radius:8px;background:var(--raised);padding:9px 11px;display:grid;gap:4px;margin-left:10px}
+.fc-card::before{content:"";position:absolute;left:-12px;top:16px;width:8px;border-top:2px solid var(--line)}
+.fc-card .nm{font-family:var(--display);font-weight:700;font-size:15px}
+.fc-card .ex{font-size:13.5px;color:var(--muted)}
+.fc-card .uw{font-size:13.5px;line-height:1.45;background:var(--surface);border-radius:6px;padding:6px 8px}
+.fc-card .uw span{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--tc);margin-right:6px}
+.t-a{--tc:#1d4f8f;--ts:#e6eef8}.t-b{--tc:#b3261e;--ts:#fbe9e7}.t-c{--tc:#9a5b00;--ts:#fbefdc}.t-d{--tc:#2e7d32;--ts:#e7f4e8}.t-e{--tc:#6a3ea1;--ts:#f1eafa}
+.fc-keys{display:grid;gap:0;border-top:1px solid var(--line);margin-top:18px}
+.fc-keys div{display:grid;grid-template-columns:180px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.fc-keys b{font-family:var(--display)}
+@media (max-width:520px){.fc-keys div{grid-template-columns:minmax(0,1fr);gap:2px}}
+
 .chart{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
 .chart img{display:block;width:100%;height:auto}
 .tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
@@ -118,6 +140,7 @@ footer{max-width:1240px;margin:48px auto 0;font-size:12.5px;color:var(--muted);t
 <script src="sys.js"></script>
 <script src="pbr.js"></script>
 <script src="naga.js"></script>
+<script src="cs.js"></script>
 <script>
 (()=>{
 const $=s=>document.querySelector(s), main=$('#main');
@@ -150,7 +173,7 @@ const mins=a=>Math.round(a.reduce((n,x)=>n+x.e-x.t,0)/60);
 // rail
 $('#rail').innerHTML=`<div class="lab eyebrow">Videos</div>`+VIDS.map(v=>`<a href="#${v.key}" data-r="${v.key}"><span class="k ${v.key}">${LABEL[v.key]}</span>${esc(v.key==='d'?'Divine Intervention':v.title.replace('High Yield Pediatrics, ','Dr High Yield, ').replace(' Pediatrics Review',''))}</a>`).join('')+
 `<div class="sep"></div><div class="lab eyebrow">By system</div><a href="#left" data-r="left"><span class="k t">${SYS.length}</span>All systems</a>`+SYS.map(x=>`<a href="#sys-${x.id}" data-r="sys-${x.id}"><span class="k t">${segsOf(x).length}</span>${esc(x.short)}</a>`).join('')+
-`<div class="sep"></div><div class="lab eyebrow">Full lectures</div><a href="#pbr" data-r="pbr"><span class="k t">${PBR.reduce((a,g)=>a+g.v.length,0)}</span>Board Review by subject</a>`+`<div class="sep"></div><div class="lab eyebrow">Topics</div><a href="#topics" data-r="topics"><span class="k t">40</span>Approach flowcharts</a>`+`<div class="sep"></div><div class="lab eyebrow">PDFs</div>`+PDFS.map(d=>`<a href="#pdf-${d.id}" data-r="pdf-${d.id}"><span class="k t">PDF</span>${esc(d.short)}</a>`).join('')+``;
+`<div class="sep"></div><div class="lab eyebrow">Full lectures</div><a href="#pbr" data-r="pbr"><span class="k t">${PBR.reduce((a,g)=>a+g.v.length,0)}</span>Board Review by subject</a>`+`<div class="sep"></div><div class="lab eyebrow">Cheat sheets</div>`+CS.map(x=>`<a href="#cs-${x.id}" data-r="cs-${x.id}"><span class="k t">${x.sheets.length}</span>${esc(x.name)}</a>`).join('')+`<div class="sep"></div><div class="lab eyebrow">PDFs</div>`+PDFS.map(d=>`<a href="#pdf-${d.id}" data-r="pdf-${d.id}"><span class="k t">PDF</span>${esc(d.short)}</a>`).join('')+``;
 
 // timestamp element: button that seeks when embedded, link to YouTube otherwise
 function stamp(key,t,cls,label){
@@ -191,10 +214,10 @@ document.addEventListener('click',e=>{
 // ---------- views ----------
 function home(){
   main.innerHTML=`<section class="hero"><p class="eyebrow">Pediatrics shelf · ${VIDS.reduce((a,v)=>a+v.sections.length,0)} jump points across 4 videos</p><h2>Watch the reviews by topic, not start to finish.</h2>
-  <p>Every section has its own timestamp and the high-yield points from that part of the video. Red bold is what to know cold. The 40 Approach flowcharts tie the same topic together across all the videos.</p></section>
+  <p>Every section has its own timestamp and the high-yield points from that part of the video. Red bold is what to know cold. The cheat sheets compare look-alike conditions by subject, with how each one shows up in a UWorld stem.</p></section>
   <div class="tiles">${VIDS.map(v=>`<a class="tile" href="#${v.key}"><span class="meta"><span class="k ${v.key} mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${LABEL[v.key]}</span>${esc(v.who)} · ${fmt(v.len)}</span><span class="tn">${esc(v.title)}</span><span class="muted" style="font-size:13.5px">${v.sections.length} sections${v.approx?' · times approximate':''}</span></a>`).join('')}
   <a class="tile" href="#pbr"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${PBR.reduce((a,g)=>a+g.v.length,0)}</span>Pediatric Board A Last-Minute Review</span><span class="tn">Full lectures by subject</span><span class="muted" style="font-size:13.5px">1 to 3 full lectures for each system</span></a>
-  <a class="tile" href="#topics"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">40</span>All sources</span><span class="tn">Approach flowcharts</span><span class="muted" style="font-size:13.5px">Each chart links to the matching moment in every video</span></a>
+  <a class="tile" href="#cs"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${CS.reduce((a,x)=>a+x.sheets.length,0)}</span>${CS.length} subjects</span><span class="tn">Cheat sheets</span><span class="muted" style="font-size:13.5px">Comparative flowcharts with the UWorld presentation of each condition</span></a>
   <a class="tile" href="#left"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">${SYS.length}</span>By system</span><span class="tn">All systems</span><span class="muted" style="font-size:13.5px">GI, cardio, renal and the rest, each as one playlist</span></a>
   <a class="tile" href="#pdfs"><span class="meta"><span class="k t mono" style="padding:1px 6px;border-radius:4px;font-size:11px;font-weight:600">PDF</span>4 documents</span><span class="tn">PDFs</span><span class="muted" style="font-size:13.5px">Flowcharts, Emma Holliday slides, Mehlman HY Pediatrics, Divine Intervention Ep 21</span></a></div>
   <div class="how"><p class="eyebrow">How to use it</p>
@@ -205,7 +228,7 @@ function home(){
 function video(key,t0){
   const v=VID[key];curVid=key;ytp=null;
   const secs=v.sections.map((s,i)=>({...s,e:(v.sections[i+1]||{t:v.len+1}).t}));
-  const related=FC.filter(f=>f.chips[key]&&f.chips[key].length);
+  const related=[];
   main.innerHTML=`<article class="vhead"><p class="eyebrow">${esc(v.who)}</p><h2>${esc(v.title)}</h2>
    <div class="meta"><span class="mono">${fmt(v.len)}</span><span>${secs.length} sections</span><a href="${yt(v.id)}">Open on YouTube</a>${key==='d'?`<a href="${diPdf}">Episode PDF</a>`:''}</div></article>
    ${EMBED&&!v.noembed?`<div class="player" id="player"><div class="frame"><button type="button" class="poster" data-t="${t0||0}" style="background-image:url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)"><span>▶ Play${t0?' from '+fmt(t0):''}</span></button></div></div>`:''}
@@ -238,6 +261,7 @@ function sysView(id){
    <div class="meta"><span class="mono">${sysList.length} clips · ${mins(sysList)} min</span>${EMBED&&sysList.length?`<button type="button" class="chip t k" id="pall">▶ Play all in order</button>`:''}</div></section>
    ${EMBED&&sysList.length&&!VID[sysList[0].k].noembed?`<div class="player" id="player"><div class="frame"><button type="button" class="poster sposter" id="sposter" style="background-image:url(https://i.ytimg.com/vi/${VID[sysList[0].k].id}/hqdefault.jpg)"><span>▶ Play all in order</span></button></div><div class="muted" id="nowp" style="font-size:13px;margin-top:6px"></div></div>`:''}
    <div class="secs">${sysList.map((c,j)=>`<div class="sec sclip" data-j="${j}">${EMBED?`<button type="button" class="ts ${c.k}" data-j="${j}">${LABEL[c.k]} ${VID[c.k].approx?'≈ ':''}${fmt(c.t)}</button>`:`<a class="ts ${c.k}" href="${yt(VID[c.k].id,c.t)}">${LABEL[c.k]} ${VID[c.k].approx?'≈ ':''}${fmt(c.t)}</a>`}<div><h3>${esc(c.s.title)} <span class="muted mono" style="font-size:12px;font-weight:500">${Math.max(1,Math.round((c.e-c.t)/60))} min</span></h3><ul>${c.s.notes.map(n=>`<li>${rich(n)}</li>`).join('')}</ul></div></div>`).join('')}</div>
+   ${CSMAP[x.id]?(()=>{const c=CS.find(q=>q.id===CSMAP[x.id]);return `<section style="margin-top:22px"><p class="eyebrow">Cheat sheets · <a href="#cs-${c.id}">${esc(c.name)}</a></p><div class="tiles">${c.sheets.map(h=>csTile(c,h)).join('')}</div></section>`})():''}
    ${pbrBlock(x.id)}
    <nav class="pager">${prev?`<a href="#sys-${prev.id}">← ${esc(prev.name)}</a>`:'<span></span>'}${next?`<a href="#sys-${next.id}">${esc(next.name)} →</a>`:''}</nav>`;
   const go=()=>{playAll=true;let n=sysIdx<0?0:sysIdx;while(n<sysList.length&&VID[sysList[n].k].noembed)n++;playClip(n)};const pa=$('#pall');if(pa)pa.onclick=go;const po=$('#sposter');if(po)po.onclick=go;
@@ -259,6 +283,24 @@ document.addEventListener('click',e=>{
   if(!EMBED)return;const b=e.target.closest('.sclip');if(!b||e.target.closest('a'))return;
   e.preventDefault();e.stopPropagation();playClip(+b.dataset.j);
 },true);
+
+const CSMAP={cv:'cardio',pulm:'pulm',gi:'gi',renal:'renal',mrepro:'renal',endo:'endo',frepro:'endo',neuro:'neuro',heme:'heme',immuno:'immuno',eye:'eye',ent:'id',tox:'dev',psych:'dev',multi:'genetics'};
+function csIndex(){curVid=null;
+  main.innerHTML=`<section class="vhead"><p class="eyebrow">By subject</p><h2>Cheat sheets</h2><div class="meta">Condition, what sets it apart, and how the kid looks in a UWorld stem. Red bold is the buzz phrase.</div></section>`+CS.map(x=>`<section style="display:grid;gap:10px"><h3><a href="#cs-${x.id}">${esc(x.name)}</a></h3><div class="tiles">${x.sheets.map(h=>csTile(x,h)).join('')}</div></section>`).join('');
+  scrollTo(0,0)}
+function csTile(x,h){return `<a class="tile" href="#cs-${x.id}-${h.id}"><span class="meta">${esc(x.name)} · ${h.g.reduce((a,g)=>a+g.x.length,0)} conditions</span><span class="tn">${esc(h.t)}</span>${h.q?`<span class="muted" style="font-size:13.5px">${esc(h.q)}</span>`:''}</a>`}
+function csSubject(id){const x=CS.find(q=>q.id===id);if(!x)return csIndex();curVid=null;
+  const i=CS.indexOf(x),prev=CS[i-1],next=CS[i+1];
+  main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="#cs">Cheat sheets</a></p><h2>${esc(x.name)}</h2></section><div class="tiles">${x.sheets.map(h=>csTile(x,h)).join('')}</div>
+  <nav class="pager">${prev?`<a href="#cs-${prev.id}">← ${esc(prev.name)}</a>`:'<span></span>'}${next?`<a href="#cs-${next.id}">${esc(next.name)} →</a>`:''}</nav>`;scrollTo(0,0)}
+function csSheet(id,sid){const x=CS.find(q=>q.id===id);if(!x)return csIndex();const h=x.sheets.find(q=>q.id===sid);if(!h)return csSubject(id);curVid=null;
+  const j=x.sheets.indexOf(h),prev=x.sheets[j-1],next=x.sheets[j+1];
+  const card=c=>`<div class="fc-card"><div class="nm">${rich(c[0])}</div>${c[1]?`<div class="ex">${rich(c[1])}</div>`:''}${c[2]?`<div class="uw"><span>UWorld</span>${rich(c[2])}</div>`:''}</div>`;
+  const col=g=>`<div class="fc-col t-${g.c||'a'}">${g.h||g.r?`<div class="fc-cat">${g.h?`<h3>${esc(g.h)}</h3>`:''}${g.r?`<p>${rich(g.r)}</p>`:''}</div>`:''}${g.x.map(card).join('')}</div>`;
+  main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="#cs">Cheat sheets</a> · <a href="#cs-${x.id}">${esc(x.name)}</a></p><h2>${esc(h.t)}</h2></section>
+  <div class="fc">${h.q?`<div class="fc-root">${rich(h.q)}</div>`:''}<div class="fc-br${h.q&&h.g.length>1?'':' one'}">${h.g.map(col).join('')}</div>
+  ${h.k&&h.k.length?`<div class="fc-keys">${h.k.map(k=>`<div><b>${esc(k[0])}</b><span>${rich(k[1])}</span></div>`).join('')}</div>`:''}</div>
+  <nav class="pager">${prev?`<a href="#cs-${x.id}-${prev.id}">← ${esc(prev.t)}</a>`:'<span></span>'}${next?`<a href="#cs-${x.id}-${next.id}">${esc(next.t)} →</a>`:''}</nav>`;scrollTo(0,0)}
 function topics(){
   main.innerHTML=`<section class="vhead"><p class="eyebrow">All sources</p><h2>Approach flowcharts</h2><div class="meta">Concepts covered in at least 2 of 4 sources, with every video moment that covers them. <a href="${fcPdf}">Open the PDF</a></div></section>
   <div class="tlist">${FC.map(f=>`<a href="#t${f.n}"><span class="n">${f.n}</span><span>${esc(f.name.replace(/^Approach to /,''))}</span></a>`).join('')}</div>`;
@@ -294,7 +336,8 @@ function search(q){
   const terms=q.toLowerCase().split(/\s+/).filter(Boolean);if(!terms.length)return route();
   const hl=s=>{let h=rich(s);terms.forEach(t=>{h=h.replace(new RegExp('('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?![^<]*>)','gi'),'<mark>$1</mark>')});return h};
   const hits=[];
-  FC.forEach(f=>{const txt=f.name.toLowerCase();if(terms.every(t=>txt.includes(t)))hits.push(`<div class="hit"><a class="chip t k" href="#t${f.n}">Chart ${f.n}</a><div><div class="t">${hl(f.name)}</div></div></div>`)});
+  CS.forEach(x=>x.sheets.forEach(h=>h.g.forEach(g=>g.x.forEach(c=>{const txt=c.join(' ').toLowerCase().replace(/\*|_/g,'');if(terms.every(t=>txt.includes(t)))hits.push(`<div class="hit"><a class="chip t k" href="#cs-${x.id}-${h.id}">${esc(x.name)}</a><div><div class="t">${hl(c[0])}</div><div class="s">${hl(c[2]||c[1])}</div></div></div>`)}))));
+  if(0)FC.forEach(f=>{const txt=f.name.toLowerCase();if(terms.every(t=>txt.includes(t)))hits.push(`<div class="hit"><a class="chip t k" href="#t${f.n}">Chart ${f.n}</a><div><div class="t">${hl(f.name)}</div></div></div>`)});
   VIDS.concat(window.NAGA||[]).forEach(v=>v.sections.forEach(s=>{const txt=(s.title+' '+s.notes.join(' ')).toLowerCase().replace(/\*|_/g,'');if(terms.every(t=>txt.includes(t))){const n=s.notes.filter(x=>terms.some(t=>x.toLowerCase().includes(t)));hits.push(`<div class="hit">${linkTo(v.key,s.t,LABEL[v.key]+' '+(v.approx?'≈':'')+fmt(s.t))}<div><div class="t">${hl(s.title)}</div><div class="s">${(n.length?n:s.notes).slice(0,2).map(hl).join(' ')}</div></div></div>`)}}));
   curVid=null;
   main.innerHTML=`<section class="vhead"><p class="eyebrow">Search</p><h2>${hits.length} result${hits.length===1?'':'s'} for “${esc(q)}”</h2></section><div class="hits">${hits.join('')||'<p class="muted">Nothing matched. Try one word, like "jaundice" or "stridor".</p>'}</div>`;
@@ -304,7 +347,9 @@ function route(){
   document.querySelectorAll('#rail a[data-r]').forEach(a=>a.classList.remove('on'));
   let m;
   if((m=h.match(/^(h1|h2|e|d|n_[\w-]{11})(?:-t(\d+))?$/))&&VID[m[1]]){r=m[1].startsWith('n_')?'pbr':m[1];video(m[1],m[2]?+m[2]:0)}
-  else if(h==='topics'){r='topics';topics()}
+  else if(h==='topics'||h==='cs'||/^t\d\d$/.test(h)){r='cs';csIndex()}
+  else if((m=h.match(/^cs-([a-z]+)-([a-z]+)$/))){r='cs-'+m[1];csSheet(m[1],m[2])}
+  else if((m=h.match(/^cs-([a-z]+)$/))){r='cs-'+m[1];csSubject(m[1])}
   else if(h==='pbr'){r='pbr';curVid=null;pbrView()}
   else if(h==='left'){r='left';left()}
   else if((m=h.match(/^sys-([a-z]+)$/))){r='sys-'+m[1];sysView(m[1])}
