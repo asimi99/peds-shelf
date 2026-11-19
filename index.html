@@ -211,8 +211,10 @@ function video(key,t0){
    ${EMBED&&!v.noembed?`<div class="player" id="player"><div class="frame"><button type="button" class="poster" data-t="${t0||0}" style="background-image:url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)"><span>▶ Play${t0?' from '+fmt(t0):''}</span></button></div></div>`:''}
    ${v.approx&&v.key.startsWith('n_')?`<p class="note">The captions on this upload are garbled, so these times are approximate. If a jump lands early or late, nudge by a minute.</p>`:''}${v.approx&&!v.key.startsWith('n_')?`<p class="note">No captions or chapters exist for this upload, so these times are estimated from the PDF page he is on. If a jump lands early or late, nudge by a minute.</p>`:''}
    <div class="secs">${secs.map(s=>`<div class="sec" data-t="${s.t}" data-e="${s.e}">${stamp(key,s.t,'ts')}<div><h3>${esc(s.title)}</h3><ul>${s.notes.map(n=>`<li>${rich(n)}</li>`).join('')}</ul>${s.p?`<div class="pg">PDF page ${s.p} · <a href="${diPdf}#page=${s.p}">open</a></div>`:''}</div></div>`).join('')}</div>
+   ${v.tx?`<section style="display:grid;gap:8px"><p class="eyebrow">Full transcript</p><div id="txb" class="secs"></div></section>`:''}
    ${related.length?`<section style="display:grid;grid-template-columns:minmax(0,1fr);gap:10px"><p class="eyebrow">Flowcharts that cite this video</p><div class="chips">${related.map(f=>`<a class="chip t k" href="#t${f.n}">${f.n} ${esc(f.name.replace(/^Approach to (the )?/,''))}</a>`).join('')}</div></section>`:''}`;
   if(EMBED&&t0){startPlayer(t0);markCur(t0)}
+  if(v.tx)fetch('tx/'+v.id+'.json').then(r=>r.json()).then(L=>{const el=$('#txb');if(el&&curVid===key)el.innerHTML=L.map(([t,x])=>`<div class="sec" data-t="${t}">${stamp(key,t,'ts')}<div><p style="margin:0">${esc(x)}</p></div></div>`).join('')}).catch(()=>{});
   scrollTo(0,0);
 }
 
@@ -223,7 +225,8 @@ function left(){
   scrollTo(0,0);
 }
 let sysList=[],sysIdx=-1,playAll=false,sp=null;
-const pbrCard=v=>`<a class="tile pbr" href="${VID['n_'+v.id]?'#n_'+v.id:'https://www.youtube.com/watch?v='+v.id}"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" loading="lazy" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px"><span class="meta"><span class="mono">${fmt(v.len)}${VID['n_'+v.id]?' · '+VID['n_'+v.id].sections.length+' sections':''}</span></span><span class="tn">${esc(v.title)}</span></a>`;
+const hasN=id=>{const n=VID['n_'+id];return !!(n&&(n.sections.length||n.tx))};
+const pbrCard=v=>`<a class="tile pbr" href="${hasN(v.id)?'#n_'+v.id:'https://www.youtube.com/watch?v='+v.id}"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" loading="lazy" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px"><span class="meta"><span class="mono">${fmt(v.len)}${hasN(v.id)?(VID['n_'+v.id].sections.length?' · '+VID['n_'+v.id].sections.length+' sections':' · transcript'):''}</span></span><span class="tn">${esc(v.title)}</span></a>`;
 function pbrBlock(id){const g=PBR.find(q=>q.sys===id);if(!g)return '';return `<section style="margin-top:28px"><p class="eyebrow">Full lectures · <a href="${PBR_CH.url}">${esc(PBR_CH.name)}</a></p><div class="tiles">${g.v.map(pbrCard).join('')}</div></section>`}
 function pbrView(){main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="${PBR_CH.url}">${esc(PBR_CH.name)}</a></p><h2>Full lectures by subject</h2></section>`+PBR.map(g=>`<section style="margin-top:22px"><h3>${SYS.find(q=>q.id===g.sys)?`<a href="#sys-${g.sys}">${esc(g.name)}</a>`:esc(g.name)}</h3><div class="tiles">${g.v.map(pbrCard).join('')}</div></section>`).join('');scrollTo(0,0)}
 
