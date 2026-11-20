@@ -106,6 +106,7 @@ main>section{min-width:0}
 .fc-card .uw span{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--tc);margin-right:6px}
 .t-a{--tc:#1d4f8f;--ts:#e6eef8}.t-b{--tc:#b3261e;--ts:#fbe9e7}.t-c{--tc:#9a5b00;--ts:#fbefdc}.t-d{--tc:#2e7d32;--ts:#e7f4e8}.t-e{--tc:#6a3ea1;--ts:#f1eafa}
 .cmpw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--raised);margin-bottom:22px}.cmp{border-collapse:collapse;width:100%;min-width:720px;font-size:13.5px;line-height:1.45}.cmp th,.cmp td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}.cmp thead th{font-family:var(--display);font-size:14.5px;color:var(--tc);background:var(--ts);border-bottom:2px solid var(--tc)}.cmp tbody th{font-family:var(--display);font-size:13px;width:140px;background:var(--surface)}.cmp tr:last-child td,.cmp tr:last-child th{border-bottom:0}
+.fc-im{margin-top:18px;display:grid;gap:14px}.fc-im h3{font-size:15.5px;color:var(--tc);margin:0 0 8px}.fc-im .row{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}.fc-im figure{margin:0;border:1px solid var(--line);border-top:4px solid var(--tc);border-radius:8px;background:#fff;padding:6px;display:grid;gap:4px}.fc-im img{width:100%;height:auto;display:block;border-radius:4px;cursor:zoom-in}.fc-im figcaption{font-size:12.5px;color:#333;line-height:1.35}
 .fc-keys{display:grid;gap:0;border-top:1px solid var(--line);margin-top:18px}
 .fc-keys div{display:grid;grid-template-columns:180px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}
 .fc-keys b{font-family:var(--display)}
@@ -141,7 +142,7 @@ footer{max-width:1240px;margin:48px auto 0;font-size:12.5px;color:var(--muted);t
 <script src="sys.js"></script>
 <script src="pbr.js"></script>
 <script src="naga.js"></script>
-<script src="cs.js"></script>
+<script src="cs.js?v=3"></script>
 <script>
 (()=>{
 const $=s=>document.querySelector(s), main=$('#main');
@@ -300,7 +301,7 @@ function csSheet(id,sid){const x=CS.find(q=>q.id===id);if(!x)return csIndex();co
   const col=g=>`<div class="fc-col t-${g.c||'a'}">${g.h||g.r?`<div class="fc-cat">${g.h?`<h3>${esc(g.h)}</h3>`:''}${g.r?`<p>${rich(g.r)}</p>`:''}</div>`:''}${g.x.map(card).join('')}</div>`;
   main.innerHTML=`<section class="vhead"><p class="eyebrow"><a href="#cs">Cheat sheets</a> · <a href="#cs-${x.id}">${esc(x.name)}</a></p><h2>${esc(h.t)}</h2></section>
   <div class="fc">${h.q?`<div class="fc-root">${rich(h.q)}</div>`:''}${h.cmp?`<div class="cmpw"><table class="cmp"><thead><tr><th></th>${h.cmp.h.map((c,i)=>`<th class="t-${h.cmp.t[i]}">${esc(c)}</th>`).join('')}</tr></thead><tbody>${h.cmp.r.map(r=>`<tr><th>${esc(r[0])}</th>${r.slice(1).map(c=>`<td>${rich(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:''}<div class="fc-br${h.q&&h.g.length>1?'':' one'}">${h.g.map(col).join('')}</div>
-  ${h.k&&h.k.length?`<div class="fc-keys">${h.k.map(k=>`<div><b>${esc(k[0])}</b><span>${rich(k[1])}</span></div>`).join('')}</div>`:''}</div>
+  ${h.k&&h.k.length?`<div class="fc-keys">${h.k.map(k=>`<div><b>${esc(k[0])}</b><span>${rich(k[1])}</span></div>`).join('')}</div>`:''}${h.im?`<div class="fc-im">${h.im.map(m=>`<div class="t-${m.c||'a'}"><h3>${esc(m.h)}</h3><div class="row">${m.s.map(x=>`<figure><a href="${x[0]}" target="_blank" rel="noopener"><img loading="lazy" src="${x[0]}" alt="${esc(x[1])}"></a><figcaption>${esc(x[1])}</figcaption></figure>`).join('')}</div></div>`).join('')}</div>`:''}</div>
   <nav class="pager">${prev?`<a href="#cs-${x.id}-${prev.id}">← ${esc(prev.t)}</a>`:'<span></span>'}${next?`<a href="#cs-${x.id}-${next.id}">${esc(next.t)} →</a>`:''}</nav>`;scrollTo(0,0)}
 function topics(){
   main.innerHTML=`<section class="vhead"><p class="eyebrow">All sources</p><h2>Approach flowcharts</h2><div class="meta">Concepts covered in at least 2 of 4 sources, with every video moment that covers them. <a href="${fcPdf}">Open the PDF</a></div></section>
