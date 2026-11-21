@@ -218,59 +218,175 @@ window.CS=[
   ['Omphalocele','**Midline, covered by a sac**','**Associated anomalies**: trisomy 13 and 18, **Beckwith-Wiedemann** (big tongue, hypoglycemia). Karyotype and echo'],
   ['Umbilical hernia','Reducible, covered by skin','Common, closes by itself. Surgery only if still there at **4 to 5 years** or incarcerated. Think **hypothyroidism** if big tongue too']]}]}
 ]},
-{id:'renal',al:'renal kidney urinary nephrology genitourinary gu',name:'Renal and urinary',sheets:[
-{id:'glom',t:'Nephritic vs nephrotic',q:'Blood and high BP, or protein and swelling?',g:[
- {h:'Nephritic (hematuria, HTN, low urine)',c:'b',r:'Cola urine, puffy eyes, high BP.',x:[
-  ['Post-streptococcal GN','Immune complexes, **low C3**','**1 to 3 weeks after strep throat** (3 to 6 after skin). Cola urine, edema, HTN. Supportive, diuretic. Penicillin **does not prevent** it'],
-  ['IgA nephropathy','IgA deposits, **normal C3**','Gross hematuria **within 1 to 5 days of a cold**, recurrent'],
-  ['IgA vasculitis (HSP)','Small vessel IgA','**Palpable purpura on buttocks and legs**, joint pain, belly pain (intussusception risk), hematuria. Normal platelets. Supportive'],
-  ['Hemolytic uremic syndrome','Shiga toxin','After bloody diarrhea: **anemia with schistocytes, low platelets, kidney injury**. Supportive, dialysis'],
-  ['Alport syndrome','Type IV collagen, X-linked','Boy with hematuria plus **sensorineural deafness** plus eye problems']]},
- {h:'Nephrotic (protein over 40 mg/m2/h, albumin low)',c:'a',r:'Edema, frothy urine, high cholesterol. Risk of **infection (SBP) and clots**.',x:[
-  ['Minimal change disease','Podocyte effacement, **normal on light microscopy**','2 to 6 years, **eyelid swelling in the morning**, after a cold. **Steroids** (works in most)'],
-  ['FSGS','Scarring','Steroid-resistant, older kid, sickle cell, HIV, obesity'],
-  ['Membranous','Subepithelial deposits','Hepatitis B, lupus. Older'],
-  ['Complications','Clots and infections','**Renal vein thrombosis** (flank pain, hematuria), strep pneumo peritonitis']]},
- {h:'Benign',c:'d',r:'',x:[
-  ['Orthostatic proteinuria','Protein only when upright','Teen, first morning urine is normal. Reassure'],
-  ['Transient proteinuria','Fever, exercise','Repeat and it is gone']]}]},
-{id:'uti',t:'UTI and urinary anomalies',q:'Fever plus urine, or a boy who has not voided?',g:[
- {h:'UTI workup',c:'a',r:'',x:[
-  ['Febrile UTI in an infant','= pyelonephritis','**Catheter sample**. Under 2 months or sick: admit, IV. Then **renal and bladder ultrasound**'],
-  ['Vesicoureteral reflux','Backflow into ureters','**VCUG after 2nd febrile UTI** or abnormal ultrasound. High grade: prophylaxis. DMSA for scars'],
-  ['Proteus','Urease','**Alkaline urine**, struvite stones']]},
- {h:'Anatomy',c:'c',r:'',x:[
-  ['Posterior urethral valves','Boys only','**Oligohydramnios**, distended bladder, weak stream, no voiding. **Catheterize**, VCUG, ablation'],
-  ['Ureteropelvic junction obstruction','Most common prenatal hydronephrosis','Flank pain after drinking a lot'],
-  ['Potter sequence','No amniotic fluid','Flat face, limb deformities, **pulmonary hypoplasia**']]},
- {h:'Wetting',c:'d',r:'',x:[
-  ['Nocturnal enuresis','Normal until 5','Urinalysis first. **Alarm** best long term, desmopressin for sleepovers'],
-  ['Daytime or new wetting','Look for cause','UTI, diabetes, constipation, abuse']]}]},
-{id:'lytes',t:'Hypertension, acid-base and electrolytes',q:'',g:[
- {h:'Hypertension in kids',c:'b',r:'Young kid: renal until proven otherwise.',x:[
-  ['Renal parenchymal','Most common in young kids','History of UTIs, scarring, GN'],
-  ['Coarctation','Arm higher than legs','Weak femoral pulses'],
-  ['Pheochromocytoma','Catecholamines','**Episodic headache, sweating, palpitations**. **Alpha-block first**, then beta'],
-  ['Teen','Primary, obesity, drugs','Sexually active girl on **OCPs**, stimulants, cocaine']]},
- {h:'Renal tubular acidosis (normal anion gap)',c:'a',r:'',x:[
-  ['Type 1 (distal)','Can not excrete H+','Urine pH over 5.5, **stones**, low potassium'],
-  ['Type 2 (proximal)','Bicarbonate wasting','Fanconi syndrome, low potassium, rickets'],
-  ['Type 4','Low aldosterone effect','**High potassium**']]},
- {h:'Electrolytes',c:'c',r:'',x:[
-  ['Pyloric stenosis','Vomiting acid','Hypochloremic hypokalemic metabolic alkalosis'],
-  ['Congenital adrenal hyperplasia','Salt wasting','**Low sodium, high potassium**, shock at 1 to 2 weeks'],
-  ['Severe hypocalcemia','Tetany, seizure, long QT','**IV calcium gluconate**. DiGeorge, transfusions']]}]},
+{id:'renal',al:'renal kidney urinary nephrology nephro genitourinary gu',name:'Renal and urinary',sheets:[
+{id:'glom',t:'Nephritic vs nephrotic',q:'Blood and high BP, or protein and swelling?',cmp:{h:['Nephritic','Nephrotic'],t:['b','a'],r:[
+ ['Core problem','**Inflamed glomerulus**. Red cells leak, filtration falls','**Leaky podocytes**. Protein pours out, filtration is usually fine'],
+ ['Urine','**Cola or tea coloured**, **red cell casts**, dysmorphic red cells, mild protein','**Frothy**, 3+ to 4+ protein, bland sediment, **fatty casts** and oval fat bodies'],
+ ['Swelling','Mild, periorbital. From **salt and water retention**','**Marked**: eyelids in the morning, then legs, scrotum, ascites. From **low albumin**'],
+ ['Blood pressure','**High**','Usually normal'],
+ ['Creatinine','**Up**, low urine output','Usually normal'],
+ ['Numbers','Hematuria over 5 red cells per high power field','Protein over **40 mg/m2/h** or urine protein to creatinine over **200 mg/mmol**, albumin under **25 g/L**, high cholesterol'],
+ ['First test that sorts it','**C3**. Low: post-strep, MPGN, lupus. Normal: IgA, HSP, Alport','Age and response to steroids. 1 to 10 years with normal C3 and normal BP: **treat as minimal change, no biopsy**'],
+ ['What kills or harms','Hypertensive encephalopathy (seizure), heart failure, hyperkalemia','**Infection** (pneumococcal peritonitis) and **clots** (renal vein, lung, sagittal sinus)'],
+ ['Treatment','Salt and fluid restriction, **loop diuretic**, blood pressure control','**Prednisone**, salt restriction. Albumin plus furosemide only for severe edema']]},
+ g:[
+ {h:'Nephritic with LOW C3',c:'b',r:'Immune complexes eat complement.',x:[
+  ['Post-streptococcal GN','Immune complexes, **low C3 that returns to normal by 6 to 8 weeks**. Subepithelial humps, lumpy-bumpy','**1 to 3 weeks after strep throat, 3 to 6 weeks after impetigo**. Cola urine, puffy eyes, high BP. ASO (throat) or **anti-DNase B (skin)**. Supportive. Penicillin clears the strep but **does not prevent** the nephritis. Almost all kids recover'],
+  ['Membranoproliferative GN','**C3 stays low past 8 weeks**. Tram-track basement membrane','Looks like post-strep that never got better. Mixed nephritic and nephrotic. Hepatitis B or C'],
+  ['Lupus nephritis','**Low C3 and C4**, anti-dsDNA','Teen girl, malar rash, joint pain, cytopenias, protein and blood in the urine']]},
+ {h:'Nephritic with NORMAL C3',c:'c',r:'',x:[
+  ['IgA nephropathy','Mesangial IgA','Gross hematuria **during or within 1 to 3 days of a cold** (no latent period), recurs with each infection'],
+  ['IgA vasculitis (HSP)','Small vessel IgA. **Normal platelets and clotting**','**Palpable purpura on buttocks and legs**, joint pain, colicky belly pain, hematuria. Risk: **ileo-ileal intussusception**. Supportive. **Follow the urine and BP for 6 months**'],
+  ['Alport syndrome','Type IV collagen, mostly X-linked. Basket-weave on electron microscopy','Boy with hematuria, **sensorineural hearing loss**, anterior lenticonus, and **uncles on dialysis**'],
+  ['Thin basement membrane disease','Benign familial hematuria','Isolated **microscopic** hematuria, family has it too, normal BP and creatinine. Reassure'],
+  ['Rapidly progressive GN','**Crescents** on biopsy','Creatinine climbing over days. Anti-GBM (with **hemoptysis**), ANCA vasculitis. Biopsy now, pulse steroids']]},
+ {h:'Nephrotic',c:'a',r:'Edema, frothy urine, low albumin, high cholesterol.',x:[
+  ['Minimal change disease','**Most common under 10**. Podocyte foot process effacement, **normal light microscopy**','2 to 6 years, **eyelid swelling mistaken for allergies**, after a cold. **Prednisone** without biopsy. Most respond in 4 weeks. **Relapses are common**'],
+  ['Focal segmental glomerulosclerosis','Scarring of parts of some glomeruli','**Steroid-resistant**, older child or teen, Black children, sickle cell, HIV, obesity. Common cause of kidney failure'],
+  ['Membranous nephropathy','Subepithelial deposits, spike and dome','Rare in kids. **Hepatitis B**, lupus'],
+  ['Congenital nephrotic syndrome','Nephrin mutation (Finnish type)','**First 3 months of life**, large placenta, edema at birth, high maternal AFP'],
+  ['When to biopsy','Not typical for minimal change','Under 1 or over 10 to 12 years, **low C3**, gross hematuria, high BP, raised creatinine, or **no remission after 4 to 8 weeks of steroids**']]},
+ {h:'Nephrotic complications',c:'b',r:'',x:[
+  ['Infection','Loses IgG and complement in the urine','**Spontaneous bacterial peritonitis** (strep pneumo): fever and belly pain in a swollen child. Give **pneumococcal vaccine**. No live vaccines on high-dose steroids'],
+  ['Clots','Loses antithrombin III','**Renal vein thrombosis**: sudden flank pain, gross hematuria, creatinine up. Also leg, lung, sagittal sinus'],
+  ['Low volume','Fluid is in the tissues, not the vessels','Swollen but **intravascularly dry**. Careful with diuretics, risk of kidney injury']]},
+ {h:'Benign proteinuria',c:'d',r:'Well child, protein on a dipstick, nothing else.',x:[
+  ['Orthostatic proteinuria','Protein only when upright','Tall teen. **First morning urine protein to creatinine is normal**. Reassure'],
+  ['Transient proteinuria','Fever, exercise, dehydration, stress','**Repeat the urine** when well and it is gone']]}],
+ k:[['C3 at 8 weeks','Back to normal = post-strep. Still low = MPGN or lupus, biopsy'],['Timing after infection','Same week = IgA nephropathy. 1 to 3 weeks later = post-strep'],['Swollen child with fever and belly pain','Nephrotic plus **peritonitis** until proven otherwise'],['Purpura with normal platelets','IgA vasculitis. Low platelets: think ITP, HUS or leukemia instead']]},
+{id:'hematuria',t:'Red or dark urine',q:'Is it really blood? Then: from the glomerulus or from the plumbing?',g:[
+ {h:'Not red cells',c:'d',r:'Check the dipstick AND the microscope.',x:[
+  ['Dipstick negative','Pigment','Beets, rifampin, food dye. Newborn **pink or brick dust diaper** = urate crystals, benign, feed more'],
+  ['Dipstick positive, no red cells','Heme pigment without cells','**Myoglobin** (rhabdomyolysis: muscle pain, high CK) or **hemoglobin** (hemolysis)']]},
+ {h:'Glomerular',c:'b',r:'**Brown or cola**, painless, no clots, **red cell casts**, dysmorphic cells, protein.',x:[
+  ['Work it up','See the nephritic sheet','BP, creatinine, **C3**, ASO, urine protein. Hearing and family history']]},
+ {h:'Non-glomerular',c:'a',r:'**Bright red or pink**, clots, may hurt, normal-shaped red cells, no casts.',x:[
+  ['UTI or cystitis','Most common cause of gross hematuria','Dysuria, frequency, positive culture'],
+  ['Adenovirus hemorrhagic cystitis','Viral','Boy with gross hematuria and dysuria, **culture negative**, gone in days'],
+  ['Idiopathic hypercalciuria','Common cause of persistent microscopic hematuria','Well child, family history of stones. **Urine calcium to creatinine ratio** high. Fluids, low salt'],
+  ['Kidney stones','In a child, think **metabolic or anatomic cause**','Colicky flank pain, vomiting, hematuria. **Ultrasound first**. Cystinuria: **hexagonal crystals**. Proteus: struvite, alkaline urine'],
+  ['Trauma','Blunt flank injury','Hematuria after **minor** trauma: think a big abnormal kidney (hydronephrosis, **Wilms tumour**)'],
+  ['Sickle cell trait or disease','Papillary necrosis','**Painless gross hematuria**, can not concentrate urine'],
+  ['Wilms tumour','Kidney tumour, 2 to 5 years','**Smooth flank mass that does not cross the midline**, hematuria, high BP. Do not keep palpating']]}],
+ k:[['Isolated microscopic hematuria, well child','Repeat the urinalysis 2 or 3 times over weeks before any workup. Most is transient'],['Gross hematuria','Always gets a urinalysis with microscopy, culture, creatinine and a **renal ultrasound**']]},
+{id:'aki',t:'Acute kidney injury and HUS',q:'Dry, damaged or blocked?',cmp:{h:['Hemolytic uremic syndrome','IgA vasculitis (HSP)','DIC','ITP'],t:['b','a','c','d'],r:[
+ ['Trigger','**Bloody diarrhea 5 to 10 days earlier** (Shiga toxin E. coli O157:H7: undercooked beef, petting zoo)','Recent cold','Sepsis, trauma','Viral illness 1 to 4 weeks earlier'],
+ ['Platelets','**Low**','**Normal**','Low','**Low, alone**'],
+ ['Hemoglobin and smear','**Anemia with schistocytes**','Normal','Schistocytes','Normal'],
+ ['PT and PTT','**Normal**','Normal','**Prolonged**, low fibrinogen','Normal'],
+ ['Kidney','**Creatinine up, low urine, high BP**','Hematuria, sometimes nephritis','Variable','Normal'],
+ ['Child looks','**Pale, tired, puffy**, petechiae, under 5 years','Well, purpura on legs and buttocks, sore joints and belly','Very sick, bleeding from lines','**Well**, petechiae and bruises only'],
+ ['Treatment','**Supportive**: fluids, transfuse if needed, dialysis. **No antibiotics, no antimotility drugs**, avoid platelets unless bleeding','Supportive, NSAIDs for joints','Treat the cause','Observe if skin only. IVIG or steroids if bleeding']]},
+ g:[
+ {h:'Prerenal (dry)',c:'a',r:'**Most common** in kids. Kidney is fine, flow is low.',x:[
+  ['Dehydration, bleeding, sepsis','FeNa **under 1%**, urine sodium under 20, **concentrated urine**, bland sediment','Vomiting and diarrhea, dry mouth, tachycardia. **Fluid bolus fixes the creatinine**'],
+  ['NSAIDs in a dehydrated child','Blocks prostaglandins that keep the afferent arteriole open','Gastro plus **ibuprofen for fever**, then creatinine jumps. Stop the NSAID, give fluids'],
+  ['Heart failure, nephrotic syndrome','Low effective volume','Swollen but underfilled']]},
+ {h:'Intrinsic (damaged)',c:'b',r:'FeNa **over 2%**, urine not concentrated. The sediment names the cause.',x:[
+  ['Acute tubular necrosis','**Muddy brown granular casts**','After prolonged shock, **aminoglycosides, vancomycin, amphotericin, contrast, cisplatin**'],
+  ['Rhabdomyolysis','Myoglobin plugs the tubules','Crush injury, seizure, hard exercise in heat. **Dipstick blood positive, no red cells**, very high CK. Aggressive IV fluids'],
+  ['Acute interstitial nephritis','**White cell casts**, urine eosinophils','**Fever, rash, eosinophilia** days to weeks after a new drug: penicillins, cephalosporins, NSAIDs, sulfa. Stop the drug'],
+  ['Glomerulonephritis','**Red cell casts**','See the nephritic sheet'],
+  ['Hemolytic uremic syndrome','Shiga toxin injures endothelium, platelets clump, red cells shear','**Anemia with schistocytes, low platelets, kidney injury** after bloody diarrhea. Most common cause of intrinsic kidney injury in young kids'],
+  ['Tumour lysis syndrome','Uric acid and phosphate crystals','Starting chemo for leukemia or Burkitt: **high potassium, phosphate and uric acid, low calcium**. Fluids, allopurinol or rasburicase']]},
+ {h:'Postrenal (blocked)',c:'c',r:'**Ultrasound**: hydronephrosis, big bladder.',x:[
+  ['Posterior urethral valves','Boys only','Newborn boy, poor stream, palpable bladder. **Catheter** first'],
+  ['Stone or tumour in a single kidney, neurogenic bladder','Obstruction','Spina bifida, pelvic mass']]},
+ {h:'Newborn kidney',c:'d',r:'',x:[
+  ['Renal vein thrombosis','Clot in a sludgy newborn','**Infant of a diabetic mother**, dehydration or polycythemia: **flank mass, gross hematuria, low platelets**'],
+  ['Renal artery thrombosis','After an **umbilical artery catheter**','Preterm baby with new **hypertension**'],
+  ['Normal newborn','First void can take up to 24 hours','Creatinine in the first days reflects the mother']]},
+ {h:'Chronic kidney disease',c:'c',r:'Under 5: born with it (dysplasia, obstruction, reflux). Older: glomerular (FSGS).',x:[
+  ['Growth failure','Acidosis, poor intake, growth hormone resistance','Short child. Fix nutrition and acidosis, then **growth hormone**'],
+  ['Renal osteodystrophy','**High phosphate, low calcium, low active vitamin D, high PTH**','Bone pain, rickets-like changes. Phosphate binders, calcitriol'],
+  ['Anemia','Low erythropoietin','**Normocytic**. Iron, then erythropoietin'],
+  ['High potassium, acidosis, hypertension','Failing excretion','Bicarbonate, low potassium diet, ACE inhibitor for proteinuria']]}],
+ k:[['Dialysis now (AEIOU)','**A**cidosis, **E**lectrolytes (potassium not responding), **I**ngestion (lithium, salicylate, methanol, ethylene glycol), **O**verload (fluid), **U**remia (pericarditis, encephalopathy)'],['HUS vs TTP','TTP adds **fever and neurologic signs**, low ADAMTS13, older patient. Plasma exchange'],['HUS without diarrhea','Strep pneumoniae (after pneumonia) or complement mediated (atypical, recurs, eculizumab)'],['Bloody diarrhea in a child','**Do not give antibiotics or loperamide** until Shiga toxin is excluded']]},
+{id:'uti',t:'UTI and urinary anomalies',q:'Fever plus urine, or a baby with swollen kidneys on the prenatal scan?',g:[
+ {h:'UTI: diagnose',c:'a',r:'Fever with no source in a child under 2: check the urine.',x:[
+  ['Who gets it','Bacteria climb up','**Uncircumcised boys in the first year**, girls after that. **Constipation** and holding urine in toilet-trained kids'],
+  ['How to collect','Not toilet trained','**Catheter or suprapubic sample**. A bag is only useful if it is **negative**. Toilet trained: midstream'],
+  ['What counts','Needs both','**Pyuria** (leukocyte esterase or white cells) AND a single organism: **50,000 CFU/mL** or more on a catheter sample'],
+  ['Organisms','**E. coli** by far','**Proteus**: alkaline urine, struvite stones. **Staph saprophyticus**: sexually active teen. Enterococcus and Staph saprophyticus are **nitrite negative**']]},
+ {h:'UTI: treat and image',c:'b',r:'Febrile UTI in a young child = pyelonephritis.',x:[
+  ['Antibiotics','7 to 10 days if febrile','**Under 2 to 3 months, toxic or vomiting: admit, IV** (ampicillin plus gentamicin, or a third generation cephalosporin). Otherwise oral (cefixime, amoxicillin-clavulanate). Cystitis in an older child: 2 to 4 days'],
+  ['Renal and bladder ultrasound','Looks for hydronephrosis and anatomy','**After the first febrile UTI under 2 years**'],
+  ['VCUG','Shows reflux and the urethra','**Abnormal ultrasound, or a second febrile UTI**. Not after an uncomplicated first one'],
+  ['DMSA scan','Shows **scars**','Later, if recurrent pyelonephritis']]},
+ {h:'Reflux and obstruction',c:'c',r:'**Prenatal hydronephrosis**: ultrasound after birth.',x:[
+  ['Vesicoureteral reflux','Short ureter tunnel in the bladder wall. Grades I to V','Recurrent febrile UTIs. **Low grades resolve with age**. High grade (IV to V): antibiotic prophylaxis, sometimes surgery. Risk: **scarring, hypertension, kidney failure**'],
+  ['Ureteropelvic junction obstruction','**Most common cause of prenatal hydronephrosis that needs surgery**','Older child with **flank pain after a large drink**, or hematuria after minor trauma. Dilated pelvis, normal ureter'],
+  ['Posterior urethral valves','Membrane in the male urethra. **Most common bladder outlet obstruction in boys**','Prenatal: **bilateral hydronephrosis, thick big bladder, oligohydramnios**. After birth: weak stream, palpable bladder. **Catheterize**, VCUG confirms, valve ablation'],
+  ['Ectopic ureter','Ureter opens below the sphincter','Girl who is **always damp** but also voids normally'],
+  ['Prune belly syndrome','Absent abdominal wall muscle','Boy with wrinkled belly, **undescended testes**, dilated urinary tract']]},
+ {h:'Malformed kidneys',c:'d',r:'',x:[
+  ['Multicystic dysplastic kidney','One kidney is a bag of cysts, **no function**','**Flank mass in a newborn**. Shrinks on its own. Check the other side for reflux'],
+  ['Autosomal recessive polycystic kidney disease','Collecting duct cysts, **liver fibrosis**','Newborn with **huge bright kidneys on both sides**, oligohydramnios, Potter sequence. Later portal hypertension'],
+  ['Autosomal dominant polycystic kidney disease','Adult type, can show in teens','Parent on dialysis, hypertension, hematuria, **berry aneurysms**, liver cysts'],
+  ['Potter sequence','**No amniotic fluid** from any cause (bilateral agenesis, valves, ARPKD)','Flat face, low ears, club feet, **pulmonary hypoplasia** is what kills'],
+  ['Horseshoe kidney','Fused lower poles, stuck under the inferior mesenteric artery','**Turner syndrome**. Stones, UPJ obstruction, higher Wilms risk'],
+  ['Single kidney','Unilateral agenesis','Often with **uterine anomalies** in girls and a single umbilical artery. Check BP and urine yearly']]},
+ {h:'Wetting',c:'a',r:'',x:[
+  ['Primary nocturnal enuresis','Never dry at night. Normal until **5 years**, runs in families','**Urinalysis first**. Reassure, less fluid in the evening. **Alarm** works best long term. **Desmopressin** is fast but relapses (limit evening fluids: hyponatremia)'],
+  ['Secondary enuresis','Dry for 6 months, then wet again','Look for a cause: **UTI, diabetes, constipation, stress or abuse, sleep apnea**'],
+  ['Daytime wetting','Bladder and bowel dysfunction','Holding postures, **constipation**. Timed voids, treat the constipation']]}],
+ k:[['Newborn abdominal mass','Most are kidney: **hydronephrosis or multicystic dysplastic kidney**. Ultrasound'],['Flank mass, age 2 to 5','Wilms (smooth, one side, well child) vs neuroblastoma (**crosses the midline**, sick child, raccoon eyes, opsoclonus)'],['No VCUG needed','First febrile UTI with a normal ultrasound and good response']]},
+{id:'lytes',t:'Hypertension, tubules and electrolytes',q:'High BP: is it the kidney? Acidosis: is the gap normal? Low potassium: is the BP high?',cmp:{h:['Type 1 (distal)','Type 2 (proximal)','Type 4'],t:['b','a','c'],r:[
+ ['Defect','Can not **secrete H+** in the collecting duct','Can not **reabsorb bicarbonate** in the proximal tubule','**Low aldosterone** or resistance to it'],
+ ['Urine pH','**Over 5.5** always','Under 5.5 once the blood bicarbonate is low','Under 5.5'],
+ ['Potassium','Low','Low','**High**'],
+ ['Clue','**Kidney stones and nephrocalcinosis**, growth failure, some with deafness','**Fanconi syndrome**: glucose, phosphate and amino acids in the urine, **rickets**. Cystinosis','**Obstructive uropathy**, congenital adrenal hyperplasia, trimethoprim, ACE inhibitors'],
+ ['Treatment','Bicarbonate or citrate','Large doses of bicarbonate, phosphate, vitamin D','Treat the cause, fludrocortisone, lower the potassium']]},
+ g:[
+ {h:'Hypertension in kids',c:'b',r:'BP at or above the **95th percentile** for age, sex and height on **3 visits**. **Right cuff size** (too small reads high). The younger the child and the higher the BP, the more likely a cause.',x:[
+  ['Newborn','Renal artery clot, coarctation','**Umbilical artery catheter**, bronchopulmonary dysplasia'],
+  ['Renal parenchymal','**Most common cause in young kids**','Past UTIs with scarring, glomerulonephritis, polycystic kidneys. Abnormal urine or creatinine'],
+  ['Renovascular','Renal artery stenosis: **fibromuscular dysplasia**, neurofibromatosis 1, Williams syndrome','Severe hypertension, **abdominal bruit**, low potassium, high renin'],
+  ['Coarctation','Narrow aorta','**Arm BP higher than leg**, weak delayed femoral pulses. Turner syndrome'],
+  ['Endocrine','Catecholamines or mineralocorticoid','**Pheochromocytoma**: episodic headache, sweating, palpitations (**alpha-block first**, then beta). Cushing. CAH from **11-beta-hydroxylase** deficiency: high BP plus virilization'],
+  ['Teen','**Primary**, obesity, drugs','Family history, high BMI. **OCPs**, stimulants, steroids, decongestants, cocaine'],
+  ['Workup','First round for everyone','Urinalysis, creatinine, electrolytes, **renal ultrasound**, echo for LVH. Four-limb BP']]},
+ {h:'Normal anion gap acidosis',c:'a',r:'Infant with **failure to thrive, vomiting and a normal gap acidosis** = renal tubular acidosis (table above).',x:[
+  ['Diarrhea','Loses bicarbonate in the stool','Most common cause. **Urine anion gap negative** (kidney is making ammonium). In RTA it is positive'],
+  ['Fanconi syndrome','Whole proximal tubule fails','Polyuria, growth failure, **rickets with normal vitamin D**, glucose in the urine with normal blood sugar. **Cystinosis** (corneal crystals), ifosfamide, Wilson disease']]},
+ {h:'Low potassium with alkalosis',c:'c',r:'Check the **BP** and the **urine chloride**.',x:[
+  ['Vomiting','Loses acid and chloride','**Urine chloride low**. Pyloric stenosis, bulimia. Fix with saline'],
+  ['Bartter syndrome','Thick ascending limb. Acts like a **loop diuretic**','Infant: **polyhydramnios**, polyuria, failure to thrive, **high urine calcium**, normal BP'],
+  ['Gitelman syndrome','Distal tubule. Acts like a **thiazide**','Teen with cramps, **low magnesium, low urine calcium**, normal BP'],
+  ['Liddle syndrome','Sodium channel stuck open','**High BP**, low potassium, **low renin and low aldosterone**. Amiloride'],
+  ['Hyperaldosteronism, renal artery stenosis','Real aldosterone excess','High BP, low potassium. Renin low (primary) or high (renovascular)']]},
+ {h:'Sodium and water',c:'b',r:'Correct sodium **slowly**: no more than about 10 to 12 mmol/L per day.',x:[
+  ['Water intoxication','Infant can not dump free water','Under 6 months, given **water or diluted formula**: hyponatremic **seizure**, low temperature. **3% saline**'],
+  ['SIADH','Too much ADH. Euvolemic, **urine concentrated while the blood is dilute**','Meningitis, pneumonia, after surgery, carbamazepine. **Fluid restrict**'],
+  ['Hypernatremic dehydration','More water lost than salt','Breastfed newborn not feeding well, or diarrhea: **irritable, high-pitched cry, doughy skin**. Lower it slowly or the brain swells (**cerebral edema**)'],
+  ['Hyponatremia fixed too fast','Water leaves brain cells','**Osmotic demyelination**'],
+  ['Diabetes insipidus','Central: no ADH. Nephrogenic: kidney ignores it (X-linked, lithium)','Polyuria, thirst, **high sodium, dilute urine**. Infant boy with fevers and poor growth. **Desmopressin** fixes central only'],
+  ['IV fluids','Bolus then maintenance','Shock or severe dehydration: **20 mL/kg normal saline**. Maintenance **4-2-1 rule** with an **isotonic** fluid plus dextrose']]},
+ {h:'Potassium and calcium',c:'d',r:'',x:[
+  ['Hyperkalemia','Kidney injury, CAH, tumour lysis, hemolyzed heel-stick sample (false)','**Peaked T waves**, wide QRS. **Calcium gluconate first** (protects the heart), then insulin with glucose, salbutamol. Remove with furosemide, resin or dialysis'],
+  ['Congenital adrenal hyperplasia','Salt wasting, 21-hydroxylase','**Low sodium, high potassium**, shock at 1 to 2 weeks'],
+  ['Hypokalemia','Vomiting, diuretics, diarrhea, RTA','Weakness, ileus, **U waves**. Fix magnesium too'],
+  ['Severe hypocalcemia','Tetany, seizure, long QT','**IV calcium gluconate**. DiGeorge, transfusions, tumour lysis']]}],
+ k:[['High BP plus low potassium','Renin high: renal artery stenosis. Renin and aldosterone both low: Liddle or licorice. Aldosterone high, renin low: primary hyperaldosteronism'],['Bartter vs Gitelman','Bartter = loop diuretic, baby, high urine calcium. Gitelman = thiazide, teen, low magnesium and low urine calcium'],['Cystinosis vs cystinuria','Cystinosis: Fanconi syndrome, kidney failure. Cystinuria: **stones** with hexagonal crystals']]},
 {id:'male',t:'Male genitourinary',q:'Painful scrotum or painless lump?',g:[
  {h:'Painful scrotum',c:'b',r:'Torsion until proven otherwise.',x:[
-  ['Testicular torsion','Bell clapper','**Sudden severe pain, high-riding horizontal testis, no cremasteric reflex**, vomiting. **Straight to OR** (do not wait for ultrasound if classic)'],
-  ['Torsion of the appendix testis','Small appendage','**Blue dot sign**, pain at the upper pole, reflex present. Rest, NSAIDs'],
-  ['Epididymitis','Sexually active teen, chlamydia or gonorrhea','Gradual pain, **Prehn sign** (lifting helps), reflex present, pyuria']]},
+  ['Testicular torsion','Bell clapper deformity. Teens and newborns','**Sudden severe pain, high-riding horizontal testis, no cremasteric reflex**, vomiting. **Straight to OR** (do not wait for ultrasound if classic). Best salvage under 6 hours. Fix the other side too'],
+  ['Torsion of the appendix testis','Small appendage, age 7 to 12','**Blue dot sign**, pain at the upper pole, reflex present. Rest, NSAIDs'],
+  ['Epididymitis','Sexually active teen: chlamydia or gonorrhea. Young boy: think urinary anomaly','Gradual pain, **Prehn sign** (lifting helps), reflex present, pyuria'],
+  ['Incarcerated inguinal hernia','Bowel stuck in the canal','Irritable infant, **firm tender groin or scrotal bulge**, vomiting. Reduce, then repair'],
+  ['IgA vasculitis','Vasculitis of the scrotum','Scrotal pain and swelling **with purpura on the legs**']]},
  {h:'Painless',c:'a',r:'',x:[
-  ['Hydrocele','Fluid, patent processus','**Transilluminates**, goes away by 1 year'],
-  ['Inguinal hernia','Bowel in the canal','Bulge with crying, does not transilluminate. **Repair soon** (incarceration)'],
-  ['Undescended testis','Cryptorchidism','**Orchiopexy by 6 to 12 months**. Lowers torsion and infertility risk, cancer risk stays but easier to examine'],
-  ['Hypospadias','Opening on underside','**Do not circumcise** (foreskin used for repair)'],
-  ['Varicocele','Left side','**Bag of worms**, worse standing']]}]}
+  ['Hydrocele','Fluid, patent processus vaginalis','**Transilluminates**. Gone by 1 year. Repair if it persists or changes size through the day (communicating)'],
+  ['Inguinal hernia','Bowel in the canal. Preterm boys','Bulge with crying, does not transilluminate. **Repair soon** (incarceration)'],
+  ['Undescended testis','Cryptorchidism','**Orchiopexy by 6 to 12 months**. Lowers torsion and infertility risk. Cancer risk stays but the testis is easier to examine'],
+  ['Retractile testis','Brisk cremasteric reflex','Can be **brought down and stays** in the scrotum. Reassure'],
+  ['Testicular tumour','Solid mass','**Painless, firm, does not transilluminate**. Yolk sac tumour in young boys (high AFP)'],
+  ['Varicocele','Left side','**Bag of worms**, worse standing. Right-sided or does not empty lying down: look for an abdominal mass']]},
+ {h:'Penis and foreskin',c:'c',r:'',x:[
+  ['Hypospadias','Opening on the underside','**Do not circumcise** (foreskin is used for repair). With undescended testes: check for a **disorder of sex development**'],
+  ['Physiologic phimosis','Foreskin does not retract','Normal in young boys. **Do not force it**'],
+  ['Paraphimosis','Retracted foreskin stuck behind the glans','Swollen painful glans. **Emergency**: reduce now'],
+  ['Both testes impalpable in a newborn','Could be a virilized girl','**Congenital adrenal hyperplasia** until excluded: karyotype, 17-hydroxyprogesterone, electrolytes']]}]}
 ]},
 {id:'endo',al:'endocrine endo hormones metabolism',name:'Endocrine',sheets:[
 {id:'short',t:'Short stature',q:'Compare bone age to real age. Is height velocity normal?',g:[
